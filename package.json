@@ -8,6 +8,10 @@
         "type": "git",
         "url": "git+https://github.com/gsoft-inc/wl-chromatic-ado.git"
     },
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
     "type": "module",
     "bin": "./dist/bin.js",
     "exports": {
