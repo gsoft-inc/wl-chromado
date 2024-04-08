@@ -5,6 +5,7 @@ name: Changesets
 on:
   push:
     branches: ["main"]
+
 env:
   CI: true
 
