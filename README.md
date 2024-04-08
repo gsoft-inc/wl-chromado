@@ -1,4 +1,4 @@
-# wl-platform-squide-remote-template
+# wl-chromatic-ado
 
 -   [Installation](#installation)
 -   [Usage](#usage)
