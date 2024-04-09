@@ -80,9 +80,7 @@ async function run() {
         <td>
 ${output.errorCount === 0
         ? "✅&nbsp; None"
-        : `❌&nbsp; ${output.errorCount} ${
-            output.errorCount === 1 ? "test" : "tests"
-        } failed`
+        : `❌&nbsp; ${output.errorCount} ${output.errorCount === 1 ? "test" : "tests"} failed`
 }
         </td>
         </tr>
@@ -91,9 +89,7 @@ ${output.errorCount === 0
         <td>
 ${output.changeCount === 0
         ? "✅&nbsp; None"
-        : `⚠️&nbsp; Found ${output.changeCount} visual ${
-            output.changeCount === 1 ? "change" : "changes"
-        }`
+        : `⚠️&nbsp; Found ${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"}`
 }
         </tr>
         <tr>
