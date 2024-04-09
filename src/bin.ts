@@ -9,7 +9,7 @@ import { getVariable, setResult, TaskResult } from "azure-pipelines-task-lib";
 import { run as chromatic } from "chromatic/node";
 import { postThread } from "./helpers.ts";
 
-function isSkippedOrOutputIsInvalid(output: Awaited<ReturnType<typeof chromatic>>) {
+function isInvalidBuild(output: Awaited<ReturnType<typeof chromatic>>) {
     return output.url === undefined && output.storybookUrl === undefined;
 }
 
@@ -34,10 +34,12 @@ async function run() {
             argv.push("--only-changed");
         }
 
+        const shouldAutoAcceptChanges = getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main";
+
         // Accepting the baseline automatically when Chromatic is executed on the "main" branch.
         // Running Chromatic on the "main" branch allow us to use "squash" merge for PRs, see: https://www.chromatic.com/docs/custom-ci-provider/#squashrebase-merge-and-the-main-branch.
         // Furthermore, changes from PR doesn't seem to be updating the baseline at all but I don't know why, it seems like a bug with ADO.
-        if (getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main") {
+        if (shouldAutoAcceptChanges) {
             argv.push("--auto-accept-changes", "main");
         }
 
@@ -50,12 +52,17 @@ async function run() {
 
         const output = await chromatic({ argv });
 
-        if (isSkippedOrOutputIsInvalid(output)) {
+        if (isInvalidBuild(output)) {
+            // For error codes view: https://www.chromatic.com/docs/cli/#exit-codes.
             if (output.code !== 0) {
                 setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}".`);
             }
 
             return;
+        }
+
+        if (shouldAutoAcceptChanges) {
+            setResult(TaskResult.Succeeded, `${output.changeCount} has been automatically accepted.`);
         }
 
         const comment = `

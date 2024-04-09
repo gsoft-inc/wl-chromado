@@ -115,8 +115,6 @@ export interface PostThreadOptions {
 }
 
 export async function postThread(content: string, { id, accessToken }: PostThreadOptions = {}) {
-    console.log("******************************", id, accessToken);
-
     const { pullRequestId } = getVariables();
 
     // Not running in a PR, so we don't need to post a comment.
