@@ -55,7 +55,6 @@ async function run() {
         const output = await chromatic({ argv });
 
         if (isVerbose) {
-            console.log(`[chromatic-ado] Chromatic exited with code "${output.code}". For additional information abour Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
             console.log(`[chromatic-ado] Chromatic exited with the following output: ${JSON.stringify(output, null, 2)}.`);
         }
 
@@ -63,7 +62,7 @@ async function run() {
         if (output.url === undefined && output.storybookUrl === undefined) {
             // For error codes view: https://www.chromatic.com/docs/cli/#exit-codes.
             if (output.code !== 0) {
-                setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}".`);
+                setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}". For additional information abour Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
             } else {
                 setResult(TaskResult.Skipped, "A build for the same commit as the last build on the branch is considered a rebuild. You can override this using the --force-rebuild flag.");
             }
@@ -74,11 +73,13 @@ async function run() {
         // Chromatic will returns changes event if they are automatically accepted.
         // We don't want to go though the whole process in this case as it's happening on the main branch.
         if (isAutoAcceptingChangesOnMainBranch) {
-            const message = output.changeCount > 0
-                ? `${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"} has been automatically accepted.`
-                : "";
+            if (isVerbose) {
+                const message = output.changeCount > 0
+                    ? `${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"} has been automatically accepted.`
+                    : "";
 
-            setResult(TaskResult.Succeeded, message);
+                console.log(`[chromatic-ado] ${message}`);
+            }
 
             return;
         }
