@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 0.0.3
+
+### Patch Changes
+
+- [#6](https://github.com/gsoft-inc/wl-chromatic-ado/pull/6) [`728386c`](https://github.com/gsoft-inc/wl-chromatic-ado/commit/728386c13e85ccdf555483153db3b2b12b0478ea) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Publishing without a scope
+
 ## 0.0.2
 
 ### Patch Changes
