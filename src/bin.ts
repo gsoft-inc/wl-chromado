@@ -28,7 +28,7 @@ async function run() {
             argv.push("--auto-accept-changes main");
         }
 
-        console.log("Running Chromatic with the following arguments: ", argv.concat(", "));
+        console.log("Running Chromatic with the following arguments: ", argv.filter(x => x).concat(", "));
 
         const output = await chromatic({ argv });
 

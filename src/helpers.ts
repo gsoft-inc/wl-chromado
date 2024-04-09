@@ -19,7 +19,7 @@ interface GetVariablesOptions {
 
 function getVariables({ accessToken }: GetVariablesOptions = {}) {
     return {
-        token: accessToken || getVariable("System.AccessToken"),
+        token: accessToken ?? getVariable("System.AccessToken"),
         collectionUri: getVariable("System.CollectionUri"),
         repositoryId: getVariable("Build.Repository.ID"),
         pullRequestId: getVariable("System.PullRequest.PullRequestId")
@@ -114,7 +114,9 @@ export interface PostThreadOptions {
 }
 
 export async function postThread(content: string, { id, accessToken }: PostThreadOptions = {}) {
-    const { pullRequestId } = getVariables({ accessToken });
+    console.log("******************************", id, accessToken);
+
+    const { pullRequestId } = getVariables();
 
     // Not running in a PR, so we don't need to post a comment.
     if (!pullRequestId) {
@@ -135,7 +137,7 @@ export async function postThread(content: string, { id, accessToken }: PostThrea
         } else {
             await createThread(content, { accessToken });
         }
-    } catch (e) {
-        throw new Error(`Could not post comment. Make sure the Project Collection Build Service Accounts has the 'Contribute to pull requests' permission set to 'Allowed'. ${e}`);
+    } catch (error) {
+        throw new Error(`Could not post comment. Make sure the Project Collection Build Service Accounts has the 'Contribute to pull requests' permission set to 'Allowed'. ${error}`);
     }
 }
