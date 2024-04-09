@@ -1,7 +1,7 @@
 {
     "name": "@workleap/chromatic-ado",
     "author": "Workleap",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "Utilities to use Chromatic with Azure DevOps.",
     "license": "Apache-2.0",
     "repository": {
