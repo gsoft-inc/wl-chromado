@@ -85,17 +85,17 @@ async function run() {
         }
 
         const comment = `
-## 🎨 Chromatic
+### ${output.errorCount > 0 || output.changeCount > 0 ? "❌" : "✅"} Chromatic
 
 <div>
     <table>
     <tbody>
         <tr>
-        <td><b>Latest commit:</b></td>
-        <td><code>${getVariable("Build.SourceVersion")}</code></td>
+        <td>🔨 Latest commit:</td>
+        <td>${getVariable("Build.SourceVersion")}</td>
         </tr>
         <tr>
-        <td><b>Errors:</b></td>
+        <td>💥 Errors:</td>
         <td>
 ${output.errorCount === 0
         ? "✅&nbsp; No test failed"
@@ -104,19 +104,19 @@ ${output.errorCount === 0
         </td>
         </tr>
         <tr>
-        <td><b>Visual changes:</b></td>
+        <td>✨ Visual changes:</td>
         <td>
 ${output.changeCount === 0
         ? "✅&nbsp; None"
-        : `⚠️&nbsp; Found ${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"}`
+        : `❌&nbsp; Found ${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"}`
 }
         </tr>
         <tr>
-        <td><b>Build URL:</b></td>
+        <td>🔍 Build URL:</td>
         <td><a href="${output.buildUrl}" target="_blank">${output.buildUrl}</a></td>
         </tr>
         <tr>
-        <td><b>Storybook URL:</b></td>
+        <td>🎨 Storybook URL:</td>
         <td><a href="${output.storybookUrl}" target="_blank">${output.storybookUrl}</a></td>
         </tr>
     </tbody>
