@@ -11,7 +11,7 @@ import { postThread } from "./helpers.ts";
 
 async function run() {
     try {
-        const isVerbose = getVariable("CHROMATIC_VERBOSE") === "true";
+        const isVerbose = getVariable("CHROMATIC_VERBOSE");
 
         // This script accepts additional Chromatic CLI arguments.
         const argv: string[] = process.argv.slice(2);
@@ -29,7 +29,7 @@ async function run() {
         }
 
         // Enable Turbosnap by default. For additional information about TurboSnap see: https://www.chromatic.com/docs/turbosnap/.
-        if (getVariable("CHROMATIC_DISABLE_TURBOSNAP") !== "true") {
+        if (!getVariable("CHROMATIC_DISABLE_TURBOSNAP")) {
             argv.push("--only-changed");
         }
 
