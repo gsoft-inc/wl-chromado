@@ -1,19 +1,18 @@
 # wl-chromatic-ado
 
--   [Installation](#installation)
--   [Usage](#usage)
+A library to easily integrate [Chromatic](https://www.chromatic.com/) with [Azure DevOps](https://azure.microsoft.com/en-ca/products/devops/pipelines).
 
-## Installation
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
+[![CI](https://github.com/gsoft-inc/wl-chromatic-ado/actions/workflows/ci.yml/badge.svg)](https://github.com/gsoft-inc/wl-chromatic-ado/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@workleap/chromatic-ado)](https://www.npmjs.com/package/@workleap/chromatic-ado)
 
-Open a terminal at the root of your project and install the following packages:
+## Have a question or found an issue?
 
-```bash
-pnpm add -D @workleap/chromatic-ado
-```
+To ask a question or propose an idea, feel free to start a new [discussion](https://github.com/gsoft-inc/wl-chromatic-ado/discussions). If you found a bug, please open an [issue](https://github.com/gsoft-inc/wl-chromatic-ado/issues).
 
-## Usage
+## Documentation
 
-TBD
+View the [user's documentation](https://gsoft-inc.github.io/wl-chromatic-ado/).
 
 ## 🤝 Contributing
 

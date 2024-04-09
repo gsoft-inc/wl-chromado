@@ -58,19 +58,36 @@ async function run() {
             console.log(`[chromatic-ado] Chromatic exited with the following output: ${JSON.stringify(output, null, 2)}.`);
         }
 
-        // Usually happens when Chromatic skip the build because it detected that a build for the same commit has already been done.
-        if (output.url === undefined && output.storybookUrl === undefined) {
-            // For error codes view: https://www.chromatic.com/docs/cli/#exit-codes.
-            if (output.code !== 0) {
-                setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}". For additional information abour Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
-            } else {
-                setResult(TaskResult.Skipped, "A build for the same commit as the last build on the branch is considered a rebuild. You can override this using the --force-rebuild flag.");
-            }
+        // 0 = OK
+        // 1 = There are visual changes
+        // 2 = There are components errors
+        // For additional information about Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.
+        if (output.code !== 0 && output.code !== 1 && output.code !== 2) {
+            setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}". For additional information about Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
 
             return;
         }
 
-        // Chromatic will returns changes event if they are automatically accepted.
+        // Usually happens when Chromatic skip the build because it detected that a build for the same commit has already been done.
+        if (output.url === undefined && output.storybookUrl === undefined) {
+            setResult(TaskResult.Succeeded, "A build for the same commit as the last build on the branch is considered a rebuild. You can override this using the --force-rebuild flag.");
+
+            return;
+        }
+
+        // // Usually happens when Chromatic skip the build because it detected that a build for the same commit has already been done.
+        // // It could also happens if there is a critical error with the build. This is why we are validating the output code.
+        // if (output.url === undefined && output.storybookUrl === undefined) {
+        //     if (output.code !== 0) {
+        //         setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}". For additional information abour Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
+        //     } else {
+        //         setResult(TaskResult.Succeeded, "A build for the same commit as the last build on the branch is considered a rebuild. You can override this using the --force-rebuild flag.");
+        //     }
+
+        //     return;
+        // }
+
+        // Chromatic will returns changes even if they are automatically accepted.
         // We don't want to go though the whole process in this case as it's happening on the main branch.
         if (isAutoAcceptingChangesOnMainBranch) {
             if (isVerbose) {
@@ -95,11 +112,11 @@ async function run() {
         <td>${getVariable("Build.SourceVersion")}</td>
         </tr>
         <tr>
-        <td>💥 Errors:</td>
+        <td>💥 Component errors:</td>
         <td>
 ${output.errorCount === 0
-        ? "✅&nbsp; No test failed"
-        : `❌&nbsp; ${output.errorCount} ${output.errorCount === 1 ? "test" : "tests"} failed`
+        ? "✅&nbsp; None"
+        : `❌&nbsp; ${output.errorCount} ${output.errorCount === 1 ? "error" : "errors"}`
 }
         </td>
         </tr>
