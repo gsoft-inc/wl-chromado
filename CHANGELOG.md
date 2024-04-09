@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 0.0.18
+
+### Patch Changes
+
+- [`9d20d61`](https://github.com/gsoft-inc/wl-chromatic-ado/commit/9d20d613bbc3ecaf68bada4425e0c030d7329ab7) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Changed how Chromatic errors are handled.
+
 ## 0.0.17
 
 ### Patch Changes
