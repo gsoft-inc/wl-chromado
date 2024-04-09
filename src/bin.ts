@@ -113,11 +113,17 @@ ${output.changeCount === 0
         </tr>
         <tr>
         <td>🔍 Build URL:</td>
-        <td><a href="${output.buildUrl}" target="_blank">${output.buildUrl}</a></td>
+        <td>
+        <a href="${output.buildUrl}" target="_blank" aria-label="${output.buildUrl} (Opens in a new window or tab)">${output.buildUrl}</a>
+        <span class="fabric-icon ms-Icon--NavigateExternalInline font-size" role="presentation" aria-hidden="true"></span>
+        </td>
         </tr>
         <tr>
         <td>🎨 Storybook URL:</td>
-        <td><a href="${output.storybookUrl}" target="_blank">${output.storybookUrl}</a></td>
+        <td>
+        <a href="${output.storybookUrl}" target="_blank" arial-label="${output.storybookUrl} (Opens in a new window or tab)">${output.storybookUrl}</a>
+        <span class="fabric-icon ms-Icon--NavigateExternalInline font-size" role="presentation" aria-hidden="true"></span>
+        </td>
         </tr>
     </tbody>
     </table>

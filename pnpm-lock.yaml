@@ -43,6 +43,9 @@ devDependencies:
   knip:
     specifier: 5.7.0
     version: 5.7.0(@types/node@20.12.2)(typescript@5.4.3)
+  retypeapp:
+    specifier: 3.5.0
+    version: 3.5.0
   tsup:
     specifier: 8.0.2
     version: 8.0.2(typescript@5.4.3)
@@ -5333,6 +5336,11 @@ packages:
   /retry@0.12.0:
     resolution: {integrity: sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==}
     engines: {node: '>= 4'}
+    dev: true
+
+  /retypeapp@3.5.0:
+    resolution: {integrity: sha512-YhHilXfKLXU2BCZ0lfj4tUVMrk8nUjkSCAoV52xIPfRfSKQQah9D5vn2Eiu+FUmeGGEB9gykr8UVi7CvjmiqbQ==}
+    hasBin: true
     dev: true
 
   /reusify@1.0.4:
