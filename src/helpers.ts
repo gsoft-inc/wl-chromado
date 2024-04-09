@@ -51,10 +51,11 @@ async function getThreads({ accessToken }: GetThreadOptions = {}): Promise<Threa
 }
 
 interface CreateThreadOptions {
+    id?: string;
     accessToken?: string;
 }
 
-async function createThread(content: string, { accessToken }: CreateThreadOptions = {}) {
+async function createThread(content: string, { id, accessToken }: CreateThreadOptions = {}) {
     const { token, collectionUri, repositoryId, pullRequestId } = getVariables({ accessToken });
 
     const url = `${collectionUri}/_apis/git/repositories/${repositoryId}/pullRequests/${pullRequestId}/threads?api-version=7.1-preview.1`;
@@ -67,7 +68,7 @@ async function createThread(content: string, { accessToken }: CreateThreadOption
         },
         body: JSON.stringify({
             status: "Unknown",
-            properties: { id: "CHROMATIC_THREAD_ID" },
+            properties: { id },
             comments: [
                 {
                     commentType: CommentType.CodeChange,
@@ -135,7 +136,7 @@ export async function postThread(content: string, { id, accessToken }: PostThrea
         if (match) {
             await editThread(content, match.id, 1, { accessToken });
         } else {
-            await createThread(content, { accessToken });
+            await createThread(content, { id, accessToken });
         }
     } catch (error) {
         throw new Error(`Could not post comment. Make sure the Project Collection Build Service Accounts has the 'Contribute to pull requests' permission set to 'Allowed'. ${error}`);

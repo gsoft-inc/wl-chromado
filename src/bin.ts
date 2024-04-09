@@ -13,13 +13,28 @@ function isSkippedOrOutputIsInvalid(output: Awaited<ReturnType<typeof chromatic>
     return output.url === undefined && output.storybookUrl === undefined;
 }
 
+function validateArgs(args: string[]) {
+    if (args.find(x => x.includes("--only-changed"))) {
+        throw new Error("To enable Turbosnap, set the CHROMATIC_ENABLE_TURBOSNAP environment variable to true.");
+    }
+
+    if (args.find(x => x.includes("--auto-accept-changes"))) {
+        throw new Error("--auto-accept-changes is not supported by @workleap/chromatic-ado.");
+    }
+}
+
 async function run() {
     try {
         // Accept additional CLI arguments.
         const argv: string[] = process.argv.slice(2);
 
-        // TEMP
-        argv.push("--only-changed");
+        validateArgs(argv);
+
+        console.log("****************** TURBO: ", getVariable("CHROMATIC_ENABLE_TURBOSNAP"));
+
+        if (getVariable("CHROMATIC_ENABLE_TURBOSNAP")) {
+            argv.push("--only-changed");
+        }
 
         // Accepting the baseline automatically when Chromatic is executed on the "main" branch.
         // Running Chromatic on the "main" branch allow us to use "squash" merge for PRs, see: https://www.chromatic.com/docs/custom-ci-provider/#squashrebase-merge-and-the-main-branch.
@@ -28,7 +43,12 @@ async function run() {
             argv.push("--auto-accept-changes main");
         }
 
-        console.log("Running Chromatic with the following arguments: ", argv.filter(x => x).concat(", "));
+        // Provide default branch paths to ignore.
+        if (!argv.find(x => x.includes("--skip"))) {
+            argv.push("--skip renovate/** changeset-release/**");
+        }
+
+        console.log("Running Chromatic with the following arguments: ", argv.join(", "));
 
         const output = await chromatic({ argv });
 
@@ -86,7 +106,7 @@ ${output.changeCount === 0
 
         await postThread(comment, {
             id: "CHROMATIC_THREAD_ID",
-            accessToken: getVariable("PULL_REQUEST_COMMENT_ACCESS_TOKEN")
+            accessToken: getVariable("CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN")
         });
 
         if (output.errorCount > 0) {
