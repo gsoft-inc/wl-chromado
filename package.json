@@ -1,5 +1,5 @@
 {
-    "name": "wl-chromatic-ado",
+    "name": "@workleap/chromatic-ado",
     "author": "Workleap",
     "version": "0.0.4",
     "description": "Utilities to use Chromatic with Azure DevOps.",
@@ -14,9 +14,6 @@
     },
     "type": "module",
     "bin": "./dist/bin.js",
-    "exports": {
-        "./chromatic.yml": "./dist/chromatic.yml"
-    },
     "files": [
         "dist"
     ],

@@ -6,28 +6,35 @@
  */
 
 import { getVariable, setResult, TaskResult } from "azure-pipelines-task-lib";
-import { run as runNode } from "chromatic/node";
+import { run as chromatic } from "chromatic/node";
 import { postThread } from "./helpers.ts";
 
-function isSkippedOrOutputIsInvalid(
-    output: Awaited<ReturnType<typeof runNode>>
-) {
+function isSkippedOrOutputIsInvalid(output: Awaited<ReturnType<typeof chromatic>>) {
     return output.url === undefined && output.storybookUrl === undefined;
 }
 
 async function run() {
     try {
-        const commitHash = getVariable("Build.SourceVersion");
-
         // Accept additional CLI arguments.
-        const output = await runNode({ argv: process.argv.slice(2) });
+        const argv: string[] = process.argv.slice(2);
+
+        console.log("*****************************: ", argv, JSON.stringify(argv));
+
+        // TEMP
+        argv.push("--only-changed");
+
+        // Accepting the baseline automatically when Chromatic is executed on the "main" branch.
+        // Running Chromatic on the "main" branch allow us to use "squash" merge for PRs, see: https://www.chromatic.com/docs/custom-ci-provider/#squashrebase-merge-and-the-main-branch.
+        // Furthermore, changes from PR doesn't seem to be updating the baseline at all but I don't know why, it seems like a bug with ADO.
+        if (getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main") {
+            argv.push("--auto-accept-changes main");
+        }
+
+        const output = await chromatic({ argv });
 
         if (isSkippedOrOutputIsInvalid(output)) {
             if (output.code !== 0) {
-                setResult(
-                    TaskResult.Failed,
-                    `Chromatic exited with code '${output.code}'.`
-                );
+                setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}".`);
             }
 
             return;
@@ -41,7 +48,7 @@ async function run() {
     <tbody>
         <tr>
         <td><b>Latest commit:</b></td>
-        <td><code>${commitHash}</code></td>
+        <td><code>${getVariable("Build.SourceVersion")}</code></td>
         </tr>
         <tr>
         <td><b>Errors:</b></td>
@@ -83,10 +90,7 @@ ${output.changeCount === 0
         });
 
         if (output.errorCount > 0) {
-            setResult(
-                TaskResult.Failed,
-                `${output.errorCount} ${output.errorCount === 1 ? "test" : "tests"} failed.`
-            );
+            setResult(TaskResult.Failed, `${output.errorCount} ${output.errorCount === 1 ? "test" : "tests"} failed.`);
         }
 
         if (output.changeCount > 0) {
@@ -98,12 +102,8 @@ ${output.changeCount === 0
     } catch (error) {
         if (error instanceof Error) {
             setResult(TaskResult.Failed, error.message);
-
-            return;
         } else {
             setResult(TaskResult.Failed, `An unknown error occured: ${error}`);
-
-            return;
         }
     }
 }
