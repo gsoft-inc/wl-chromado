@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 0.0.12
+
+### Patch Changes
+
+- [`999565b`](https://github.com/gsoft-inc/wl-chromatic-ado/commit/999565b5e21a1b1fe2e5e8e07c2a6d64a652957a) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Final enhancements before the first major release.
+
 ## 0.0.11
 
 ### Patch Changes
