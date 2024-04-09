@@ -33,9 +33,9 @@ async function run() {
         // Accepting the baseline automatically when Chromatic is executed on the "main" branch.
         // Running Chromatic on the "main" branch allow us to use "squash" merge for PRs, see: https://www.chromatic.com/docs/custom-ci-provider/#squashrebase-merge-and-the-main-branch.
         // Furthermore, changes from PR doesn't seem to be updating the baseline at all but I don't know why, it seems like a bug with ADO.
-        const isAutoAcceptChanges = getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main";
+        const isAutoAcceptingChanges = getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main";
 
-        if (isAutoAcceptChanges) {
+        if (isAutoAcceptingChanges) {
             argv.push("--auto-accept-changes", "main");
         }
 
@@ -58,8 +58,15 @@ async function run() {
             return;
         }
 
-        if (isAutoAcceptChanges) {
-            setResult(TaskResult.Succeeded, `${output.changeCount} changes has been automatically accepted.`);
+        // Chromatic will returns changes event if they are automatically accepted.
+        if (isAutoAcceptingChanges) {
+            const message = output.changeCount > 0
+                ? `${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"} has been automatically accepted.`
+                : "";
+
+            setResult(TaskResult.Succeeded, message);
+
+            return;
         }
 
         const comment = `
