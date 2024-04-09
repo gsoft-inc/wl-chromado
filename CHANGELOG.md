@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 0.0.17
+
+### Patch Changes
+
+- [`f726272`](https://github.com/gsoft-inc/wl-chromatic-ado/commit/f726272d872e87a24b32e1112cc78501ffc75a31) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Visual changes to the PR comment message.
+
 ## 0.0.16
 
 ### Patch Changes
