@@ -1,5 +1,5 @@
 {
-    "name": "@workleap/chromatic-ado",
+    "name": "wl-chromatic-ado",
     "author": "Workleap",
     "version": "0.0.2",
     "description": "Utilities to use Chromatic with Azure DevOps.",
