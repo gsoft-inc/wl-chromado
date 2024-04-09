@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 0.0.6
+
+### Patch Changes
+
+- [`7134b59`](https://github.com/gsoft-inc/wl-chromatic-ado/commit/7134b59ae38d7d0217eb34cc126a7f19b7b27c60) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Fixing argv logging.
+
 ## 0.0.5
 
 ### Patch Changes
