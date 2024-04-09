@@ -30,8 +30,6 @@ async function run() {
 
         validateArgs(argv);
 
-        console.log("****************** TURBO: ", getVariable("CHROMATIC_ENABLE_TURBOSNAP"));
-
         if (getVariable("CHROMATIC_ENABLE_TURBOSNAP")) {
             argv.push("--only-changed");
         }
@@ -40,12 +38,12 @@ async function run() {
         // Running Chromatic on the "main" branch allow us to use "squash" merge for PRs, see: https://www.chromatic.com/docs/custom-ci-provider/#squashrebase-merge-and-the-main-branch.
         // Furthermore, changes from PR doesn't seem to be updating the baseline at all but I don't know why, it seems like a bug with ADO.
         if (getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main") {
-            argv.push("--auto-accept-changes main");
+            argv.push("--auto-accept-changes", "main");
         }
 
         // Provide default branch paths to ignore.
         if (!argv.find(x => x.includes("--skip"))) {
-            argv.push("--skip renovate/** changeset-release/**");
+            argv.push("--skip", "renovate/**", "changeset-release/**");
         }
 
         console.log("Running Chromatic with the following arguments: ", argv.join(", "));
