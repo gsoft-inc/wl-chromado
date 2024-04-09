@@ -18,8 +18,6 @@ async function run() {
         // Accept additional CLI arguments.
         const argv: string[] = process.argv.slice(2);
 
-        console.log("*****************************: ", argv, JSON.stringify(argv));
-
         // TEMP
         argv.push("--only-changed");
 
@@ -29,6 +27,8 @@ async function run() {
         if (getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main") {
             argv.push("--auto-accept-changes main");
         }
+
+        console.log("Running Chromatic with the following arguments: ", argv.concat(", "));
 
         const output = await chromatic({ argv });
 
