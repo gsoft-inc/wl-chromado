@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 0.0.13
+
+### Patch Changes
+
+- [`963fd8c`](https://github.com/gsoft-inc/wl-chromatic-ado/commit/963fd8c903306317266b063895b346ba15476eb8) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Added a verbose mode.
+
 ## 0.0.12
 
 ### Patch Changes
