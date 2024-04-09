@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 0.0.5
+
+### Patch Changes
+
+- [`7e74634`](https://github.com/gsoft-inc/wl-chromatic-ado/commit/7e746349f719416838589d0ae05ab294206af56a) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Trying to deprecated the azure devops script.
+
 ## 0.0.4
 
 ### Patch Changes
