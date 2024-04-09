@@ -11,6 +11,8 @@ import { postThread } from "./helpers.ts";
 
 async function run() {
     try {
+        const isVerbose = getVariable("CHROMATIC_VERBOSE") === "true";
+
         // This script accepts additional Chromatic CLI arguments.
         const argv: string[] = process.argv.slice(2);
 
@@ -46,11 +48,16 @@ async function run() {
             argv.push("--skip", "renovate/**", "changeset-release/**");
         }
 
-        console.log("[chromatic-ado] Running Chromatic with the following arguments: ", argv.join(", "));
+        if (isVerbose) {
+            console.log("[chromatic-ado] Running Chromatic with the following arguments: ", argv.join(", "));
+        }
 
         const output = await chromatic({ argv });
 
-        console.log(`[chromatic-ado] Chromatic exited with code "${output.code}". For additional information abour Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
+        if (isVerbose) {
+            console.log(`[chromatic-ado] Chromatic exited with code "${output.code}". For additional information abour Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
+            console.log(`[chromatic-ado] Chromatic exited with the following output: ${JSON.stringify(output, null, 2)}.`);
+        }
 
         // Usually happens when Chromatic skip the build because it detected that a build for the same commit has already been done.
         if (output.url === undefined && output.storybookUrl === undefined) {
@@ -90,7 +97,7 @@ async function run() {
         <td><b>Errors:</b></td>
         <td>
 ${output.errorCount === 0
-        ? "✅&nbsp; None"
+        ? "✅&nbsp; No test failed"
         : `❌&nbsp; ${output.errorCount} ${output.errorCount === 1 ? "test" : "tests"} failed`
 }
         </td>
