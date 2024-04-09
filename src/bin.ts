@@ -9,57 +9,64 @@ import { getVariable, setResult, TaskResult } from "azure-pipelines-task-lib";
 import { run as chromatic } from "chromatic/node";
 import { postThread } from "./helpers.ts";
 
-function validateArgs(args: string[]) {
-    if (args.find(x => x.includes("--only-changed"))) {
-        throw new Error("To enable Turbosnap, set the CHROMATIC_ENABLE_TURBOSNAP environment variable to true.");
-    }
-
-    if (args.find(x => x.includes("--auto-accept-changes"))) {
-        throw new Error("--auto-accept-changes is not supported by @workleap/chromatic-ado.");
-    }
-}
-
 async function run() {
     try {
-        // Accept additional CLI arguments.
+        // This script accepts additional Chromatic CLI arguments.
         const argv: string[] = process.argv.slice(2);
 
-        validateArgs(argv);
+        if (argv.includes("--only-changed")) {
+            setResult(TaskResult.Failed, "--only-changed is added by default by @workleap/chromatic-ado.");
 
-        if (getVariable("CHROMATIC_ENABLE_TURBOSNAP")) {
+            return;
+        }
+
+        if (argv.includes("--auto-accept-changes")) {
+            setResult(TaskResult.Failed, "--auto-accept-changes is already handled by @workleap/chromatic-ado.");
+
+            return;
+        }
+
+        // Enable Turbosnap by default. For additional information about TurboSnap see: https://www.chromatic.com/docs/turbosnap/.
+        if (getVariable("CHROMATIC_DISABLE_TURBOSNAP") !== "true") {
             argv.push("--only-changed");
         }
 
         // Accepting the baseline automatically when Chromatic is executed on the "main" branch.
         // Running Chromatic on the "main" branch allow us to use "squash" merge for PRs, see: https://www.chromatic.com/docs/custom-ci-provider/#squashrebase-merge-and-the-main-branch.
-        // Furthermore, changes from PR doesn't seem to be updating the baseline at all but I don't know why, it seems like a bug with ADO.
-        const isAutoAcceptingChanges = getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main";
+        // Furthermore, changes from PR doesn't seem to be updating the baseline at all but I don't know why, it seems like a bug with ADO (but according to Chromatic customers support it's normal).
+        const isAutoAcceptingChangesOnMainBranch = getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main";
 
-        if (isAutoAcceptingChanges) {
+        if (isAutoAcceptingChangesOnMainBranch) {
+            // The second arg restrict the changes to be auto accepted only for the "main" branch.
             argv.push("--auto-accept-changes", "main");
         }
 
-        // Provide default branch paths to ignore.
-        if (!argv.find(x => x.includes("--skip"))) {
+        // Add default branch paths to ignore.
+        if (!argv.includes("--skip")) {
             argv.push("--skip", "renovate/**", "changeset-release/**");
         }
 
-        console.log("Running Chromatic with the following arguments: ", argv.join(", "));
+        console.log("[chromatic-ado] Running Chromatic with the following arguments: ", argv.join(", "));
 
         const output = await chromatic({ argv });
 
-        // This is an invalid build.
+        console.log(`[chromatic-ado] Chromatic exited with code "${output.code}". For additional information abour Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
+
+        // Usually happens when Chromatic skip the build because it detected that a build for the same commit has already been done.
         if (output.url === undefined && output.storybookUrl === undefined) {
             // For error codes view: https://www.chromatic.com/docs/cli/#exit-codes.
             if (output.code !== 0) {
                 setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}".`);
+            } else {
+                setResult(TaskResult.Skipped, "A build for the same commit as the last build on the branch is considered a rebuild. You can override this using the --force-rebuild flag.");
             }
 
             return;
         }
 
         // Chromatic will returns changes event if they are automatically accepted.
-        if (isAutoAcceptingChanges) {
+        // We don't want to go though the whole process in this case as it's happening on the main branch.
+        if (isAutoAcceptingChangesOnMainBranch) {
             const message = output.changeCount > 0
                 ? `${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"} has been automatically accepted.`
                 : "";
