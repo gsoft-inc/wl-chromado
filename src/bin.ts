@@ -11,7 +11,7 @@ import { postThread } from "./helpers.ts";
 
 async function run() {
     try {
-        const isVerbose = getVariable("CHROMATIC_VERBOSE");
+        const isDebug = getVariable("CHROMATIC_DEBUG");
 
         // This script accepts additional Chromatic CLI arguments.
         const argv: string[] = process.argv.slice(2);
@@ -24,6 +24,12 @@ async function run() {
 
         if (argv.includes("--auto-accept-changes")) {
             setResult(TaskResult.Failed, "--auto-accept-changes is already handled by @workleap/chromatic-ado.");
+
+            return;
+        }
+
+        if (argv.includes("--debug")) {
+            setResult(TaskResult.Failed, "--debug is bot supported by @workleap/chromatic-ado. Provide a \"CHROMATIC_DEBUG\" environment variable instead.");
 
             return;
         }
@@ -48,13 +54,17 @@ async function run() {
             argv.push("--skip", "renovate/**", "changeset-release/**");
         }
 
-        if (isVerbose) {
+        if (isDebug) {
+            argv.push("--debug");
+        }
+
+        if (isDebug) {
             console.log("[chromatic-ado] Running Chromatic with the following arguments: ", argv.join(", "));
         }
 
         const output = await chromatic({ argv });
 
-        if (isVerbose) {
+        if (isDebug) {
             console.log(`[chromatic-ado] Chromatic exited with the following output: ${JSON.stringify(output, null, 2)}.`);
         }
 
@@ -75,22 +85,10 @@ async function run() {
             return;
         }
 
-        // // Usually happens when Chromatic skip the build because it detected that a build for the same commit has already been done.
-        // // It could also happens if there is a critical error with the build. This is why we are validating the output code.
-        // if (output.url === undefined && output.storybookUrl === undefined) {
-        //     if (output.code !== 0) {
-        //         setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}". For additional information abour Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
-        //     } else {
-        //         setResult(TaskResult.Succeeded, "A build for the same commit as the last build on the branch is considered a rebuild. You can override this using the --force-rebuild flag.");
-        //     }
-
-        //     return;
-        // }
-
         // Chromatic will returns changes even if they are automatically accepted.
         // We don't want to go though the whole process in this case as it's happening on the main branch.
         if (isAutoAcceptingChangesOnMainBranch) {
-            if (isVerbose) {
+            if (isDebug) {
                 const message = output.changeCount > 0
                     ? `${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"} has been automatically accepted.`
                     : "";
@@ -157,10 +155,9 @@ ${output.changeCount === 0
         }
 
         if (output.changeCount > 0) {
-            setResult(
-                TaskResult.Failed,
-                `Found ${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"}. Review the ${output.changeCount === 1 ? "change" : "changes"} and re-queue the build to proceed.`
-            );
+            const message = `Found ${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"}. Review the ${output.changeCount === 1 ? "change" : "changes"} and re-queue the build to proceed.`;
+
+            setResult(TaskResult.Failed, message);
         }
     } catch (error) {
         if (error instanceof Error) {

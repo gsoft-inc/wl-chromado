@@ -1,6 +1,6 @@
 # wl-chromatic-ado
 
-A library to easily integrate [Chromatic](https://www.chromatic.com/) with [Azure DevOps](https://azure.microsoft.com/en-ca/products/devops/pipelines).
+A library to easily integrate [Chromatic](https://www.chromatic.com/) with [Azure Pipelines](https://azure.microsoft.com/en-ca/products/devops/pipelines).
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![CI](https://github.com/gsoft-inc/wl-chromatic-ado/actions/workflows/ci.yml/badge.svg)](https://github.com/gsoft-inc/wl-chromatic-ado/actions/workflows/ci.yml)
@@ -12,7 +12,7 @@ To ask a question or propose an idea, feel free to start a new [discussion](http
 
 ## Documentation
 
-View the [user's documentation](https://gsoft-inc.github.io/wl-chromatic-ado/).
+View the [user's documentation](https://gsoft-inc.github.io/wl-chromatic-ado).
 
 ## 🤝 Contributing
 
@@ -20,4 +20,4 @@ View the [contributor's documentation](./CONTRIBUTING.md).
 
 ## License
 
-Copyright © 2023, Workleap This code is licensed under the Apache License, Version 2.0. You may obtain a copy of this license at https://github.com/gsoft-inc/workleap-license/blob/master/LICENSE.
+Copyright © 2024, Workleap This code is licensed under the Apache License, Version 2.0. You may obtain a copy of this license at https://github.com/gsoft-inc/workleap-license/blob/master/LICENSE.

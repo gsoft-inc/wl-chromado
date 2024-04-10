@@ -32,7 +32,7 @@ output: .retype
 url: https://gsoft-inc.github.io/wl-chromatic-ado/
 
 branding:
-    title: "Chromatic ADO"
+    title: "Chromatic - ADO"
     logo: ./static/logo.png
 
 favicon: ./static/favicon.png
