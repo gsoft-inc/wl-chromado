@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gsoft-inc.github.io/wl-chromatic-ado/sitemap.xml.gz
+Sitemap: https://gsoft-inc.github.io/wl-chromado/sitemap.xml.gz
