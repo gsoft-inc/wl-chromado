@@ -160,21 +160,29 @@ steps:
 
 ## Try it :rocket:
 
--> Locally start a chromatic build and accepts the changes to create a baseline
+To test your new Chromatic pipeline, execute the following steps:
 
--> Switch to a branch, make a visual change to a component for which a story is watched by Chromatic and the commit the change
+1. Locally start a Chromatic build by opening a terminal at the root of the project and executing the following command: `pnpm chromatic --project-token <YOUR_PROJECT_TOKEN>`.
 
--> A Chromatic build should be automatically triggered and a pull request notifications should be posted with visual changes
+2. Go to the [Chromatic](https://www.chromatic.com/start) application and accepts all the changes to create a baseline. This guide takes for granted that your application already includes a few Storybook stories.
 
-- Click on the URL of the build and accept the changes
+3. Switch to a new Git branch and update an existing component watched by Chromatic to trigger a visual change. Commit the change.
 
--> Re-queue the Chromatic pipeline
+4. Go to Azure Devops and create a pull request for your new branch.
 
--> Once it completed with success, complete the PR
+5. A Chromatic build should be automatically triggered for the pull request and a pull request comment with the visual change should be added to the pull request. The comment should mention that Chromatic detected at least one visual change.
 
--> Another Chromatic build should be triggered on the main branch. The changes should be auto accepted and the pipeline should complete successfully
+6. In the pull request comment, click on the "Build URL" link. Accept the changes in the [Chromatic](https://www.chromatic.com/start) application.
+
+7. Re-queue the Chromatic pipeline by clicking on the "Re-queue" button of the pull request.
+
+8. Once the Chromatic pipeline completed with success, merge the pull request.
+
+9. Once merged, a new Chromatic build should be automatically triggered for the `main` branch. The changes of this new build should be automatically accepted and the pipeline should complete successfully.
 
 ### Troubleshoot issues
+
+
 
 -> Add the debug env var
 
