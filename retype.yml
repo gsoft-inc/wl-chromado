@@ -29,16 +29,16 @@ start:
 input: ./docs
 output: .retype
 
-url: https://gsoft-inc.github.io/wl-chromatic-ado/
+url: https://gsoft-inc.github.io/wl-chromado/
 
 branding:
-    title: "Chromatic - ADO"
+    title: "Chromado"
     logo: ./static/logo.png
 
 favicon: ./static/favicon.png
 
 edit:
-    repo: "https://github.com/gsoft-inc/wl-chromatic-ado"
+    repo: "https://github.com/gsoft-inc/wl-chromado"
     base: /docs
     branch: main
 
@@ -49,27 +49,27 @@ links:
 
     - text: Found a bug?
       icon: issue-opened
-      link: https://github.com/gsoft-inc/wl-chromatic-ado/issues
+      link: https://github.com/gsoft-inc/wl-chromado/issues
       target: blank
 
     - text: Feature requests
       icon: comment-discussion
-      link: https://github.com/gsoft-inc/wl-chromatic-ado/discussions
+      link: https://github.com/gsoft-inc/wl-chromado/discussions
       target: blank
 
     - text: Releases
       icon: tag
-      link: https://github.com/gsoft-inc/wl-chromatic-ado/releases
+      link: https://github.com/gsoft-inc/wl-chromado/releases
       target: blank
 
     - text: Github
       icon: mark-github
-      link: https://github.com/gsoft-inc/wl-chromatic-ado
+      link: https://github.com/gsoft-inc/wl-chromado
       target: blank
 
     - text: NPM
       icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0H24V24H0V0Z" fill="#CC0000"/><path d="M11.9184 2.57758H2.57764V21.4214H11.9175V7.32958H16.6695V21.4214H21.4215V2.57758H11.9184Z" fill="white"/></svg>
-      link: https://www.npmjs.com/package/@workleap/chromatic-ado
+      link: https://www.npmjs.com/package/@workleap/chromado
       target: blank
 
 footer:
@@ -81,7 +81,7 @@ footer:
 
         - text: License
           icon: shield-check
-          link: https://github.com/gsoft-inc/wl-chromatic-ado/blob/main/LICENSE
+          link: https://github.com/gsoft-inc/wl-chromado/blob/main/LICENSE
           target: blank
 
 # To allow using {{ }} in code blocks.

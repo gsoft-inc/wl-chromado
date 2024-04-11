@@ -5,17 +5,17 @@ icon: rocket
 
 # Getting started
 
-Welcome to the `@workleap/chromatic-ado` package documentation. On this page, you'll discover how this package can optimize your [Chromatic](https://www.chromatic.com/) + [Azure Pipelines](https://azure.microsoft.com/en-ca/products/devops/pipelines) integration and learn how to set it up for your environment.
+Welcome to the Chromado documentation, a library to seamlessly integrate [Chromatic](https://www.chromatic.com/) + [Azure Pipelines](https://azure.microsoft.com/en-ca/products/devops/pipelines). On this page, you'll discover how this package can optimize your workflow and learn how to set it up for your environment.
 
 ## Features
 
-This package aims to provide a workflow similar to the native Chromatic [GitHub integration](https://www.chromatic.com/docs/github-actions/). While it's hardly as good, it's a functional workflow until Chromatic offers a native Azure Pipelines integration.
+Chromado aims to provide a workflow similar to the native Chromatic [GitHub integration](https://www.chromatic.com/docs/github-actions/). While it's hardly as good, it's a functional workflow until Chromatic offers a native Azure Pipelines integration.
 
 ### Build notifications
 
 The Chromatic Azure Pipelines [documentation](https://www.chromatic.com/docs/azure-pipelines/) explains how to integrate Chromatic within an existing pipeline through its CLI, but it's basically it, it lacks build notifications, it's up to you to figure out this part.
 
-This package resolves this by automatically providing build notifications as pull request comments whenever a Chromatic build is completed:
+Chromado resolves this by automatically providing build notifications as pull request comments whenever a Chromatic build is completed:
 
 :::align-image-left
 ![Pull request notification example](./static/chromatic-pr-notification.png)
@@ -23,11 +23,11 @@ This package resolves this by automatically providing build notifications as pul
 
 ### TurboSnap
 
-This package is compatible with [TurboSnap](https://www.chromatic.com/docs/turbosnap/) and will by default trigger Chromatic builds with TurboSnap activated.
+Chromado is compatible with [TurboSnap](https://www.chromatic.com/docs/turbosnap/) and will by default trigger Chromatic builds with TurboSnap activated.
 
 ### Squash merge
 
-Chromatic doesn't offer any mechanism to support [squash merge](https://learn.microsoft.com/en-us/azure/devops/repos/git/merging-with-squash?view=azure-devops) on Azure DevOps. This means that when using Azure DevOps as a Git provider, if you wish to keep your Chromatic [baselines](https://www.chromatic.com/docs/branching-and-baselines/) up-to-date, you would be constrained to merging your pull requests with regular merge commits. Fortunately, this package implements a workflow based on Chromatic's [auto-accept-changes](https://www.chromatic.com/docs/azure-pipelines/#azure-squashrebase-merge-and-the-main-branch) feature, allowing pull requests to be completed with squash merges.
+Chromatic doesn't offer any mechanism to support [squash merge](https://learn.microsoft.com/en-us/azure/devops/repos/git/merging-with-squash?view=azure-devops) on Azure DevOps. This means that when using Azure DevOps as a Git provider, if you wish to keep your Chromatic [baselines](https://www.chromatic.com/docs/branching-and-baselines/) up-to-date, you would be constrained to merging your pull requests with regular merge commits. Fortunately, Chromado implements a workflow based on Chromatic's [auto-accept-changes](https://www.chromatic.com/docs/azure-pipelines/#azure-squashrebase-merge-and-the-main-branch) feature, allowing pull requests to be completed with squash merges.
 
 Here's how it works:
 
@@ -96,14 +96,14 @@ steps:
   - task: CmdLine@2
     displayName: Chromatic
     inputs:
-      script: pnpm dlx @workleap/chromatic-ado
+      script: pnpm dlx @workleap/chromado
     env:
       CHROMATIC_PROJECT_TOKEN: $(CHROMATIC_PROJECT_TOKEN)
       CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
 ```
 
 !!!info
-Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuration-options) are accepted by the `@workleap/chromatic-ado` script. If an option is not accepted, the script will output an error message.
+Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuration-options) are accepted by the `@workleap/chromado` script. If an option is not accepted, the script will output an error message.
 !!!
 
 2.2. If your project doesn't include a template file to set up your pipelines, paste the following configuration:
@@ -162,14 +162,14 @@ steps:
   - task: CmdLine@2
     displayName: Chromatic
     inputs:
-      script: pnpm dlx @workleap/chromatic-ado
+      script: pnpm dlx @workleap/chromado
     env:
       CHROMATIC_PROJECT_TOKEN: $(CHROMATIC_PROJECT_TOKEN)
       CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
 ```
 
 !!!info
-Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuration-options) are accepted by the `@workleap/chromatic-ado` script. If an option is not accepted, the script will output an error message.
+Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuration-options) are accepted by the `@workleap/chromado` script. If an option is not accepted, the script will output an error message.
 !!!
 
 3. Create a new [Azure pipeline from an existing YAML file](https://www.nathannellans.com/post/azure-devops-yaml-pipelines-part-1). Name this new pipeline "Chromatic" or choose a name that best suits your project.
@@ -218,7 +218,7 @@ If you encounter issues with the Chromatic pipeline, follow these steps:
 - task: CmdLine@2
   displayName: Chromatic
   inputs:
-    script: pnpm dlx @workleap/chromatic-ado
+    script: pnpm dlx @workleap/chromado
   env:
     CHROMATIC_PROJECT_TOKEN: $(CHROMATIC_PROJECT_TOKEN)
     CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
@@ -237,7 +237,7 @@ If you encounter issues with the Chromatic pipeline, follow these steps:
 - task: CmdLine@2
   displayName: Chromatic
   inputs:
-    script: pnpm dlx @workleap/chromatic-ado
+    script: pnpm dlx @workleap/chromado
   env:
     CHROMATIC_PROJECT_TOKEN: $(CHROMATIC_PROJECT_TOKEN)
     CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
