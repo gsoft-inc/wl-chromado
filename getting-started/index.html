@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/wl-chromatic-ado">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766118985286">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766121738584">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -34,12 +34,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../static/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.766118985286" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.766121738584" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766118985286" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766121738584" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766118985286" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766118985286" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766121738584" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766121738584" defer></script>
 
     <link href="https://gsoft-inc.github.io/wl-idp-docs-hub/static/retype-customization.css" rel="stylesheet" />
 
@@ -588,7 +588,7 @@ steps:
 <ul>
 <li><p>Verify that the <code v-pre>CHROMATIC_PROJECT_TOKEN</code> pipeline variable value is correct. To find your Chromatic project token, log in to <a href="https://www.chromatic.com/start" class="outbound" target="_blank">Chromatic</a>, select your project in the list, and go to <code v-pre>Manage</code> &gt; <code v-pre>Configure</code> &gt; <code v-pre>Project</code> and look for <code v-pre>Setup Chromatic with this project token</code>.</p>
 </li>
-<li><p>Confirm that that the <code v-pre>projectId</code> field in your <code v-pre>chromatic.config.json</code> file contains the correct project id. You can find the project id in the Chromatic project URL under the <code v-pre>appId</code> parameter. For example, if your project id is <code v-pre>123</code>, the project URL would be <code v-pre>https://www.chromatic.com/manage?appId=123</code>.</p>
+<li><p>Confirm that the <code v-pre>projectId</code> field in your <code v-pre>chromatic.config.json</code> file contains the correct project id. You can find the project id in the Chromatic project URL under the <code v-pre>appId</code> parameter. For example, if your project id is <code v-pre>123</code>, the project URL would be <code v-pre>https://www.chromatic.com/manage?appId=123</code>.</p>
 </li>
 <li><p>Ensure that the <code v-pre>PULL_REQUEST_COMMENT_ACCESS_TOKEN</code> pipeline variable value is a valid, non-expired token.</p>
 </li>
@@ -619,7 +619,7 @@ steps:
             </svg>
         </div>
         <div class="pr-5 ml-3 w-full">
-<p>Note that TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap.</p>
+<p>TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap.</p>
         </div>
     </div>
 </div>
