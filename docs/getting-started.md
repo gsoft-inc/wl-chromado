@@ -201,7 +201,7 @@ To test your new Chromatic pipeline, follow these steps:
 7. Re-queue the Chromatic pipeline by clicking on the "Re-queue" button of the pipeline in the pull request.
 
 :::align-image-left
-![](./static/requeue_chromatic_pipeline.png)
+![](./static/requeue-chromatic-pipeline.png)
 :::
 
 8. Once the Chromatic pipeline completes successfully, merge the pull request.
