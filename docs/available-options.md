@@ -18,7 +18,7 @@ Here's how you can specify additional Chromatic CLI options:
     CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
 ```
 
-In addition to Chromatic CLI options, a few environment variables are accepted.
+In addition to Chromatic CLI options, a few environment variables are accepted 👇
 
 ## CHROMATIC_DEBUG
 
