@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/wl-chromatic-ado">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766117424260">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766117834342">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -34,12 +34,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../static/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.766117424260" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.766117834342" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766117424260" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766117834342" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766117424260" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766117424260" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766117834342" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766117834342" defer></script>
 
     <link href="https://gsoft-inc.github.io/wl-idp-docs-hub/static/retype-customization.css" rel="stylesheet" />
 
@@ -338,7 +338,7 @@
         <span>Setting up your workflow</span>
     </h2>
 </doc-anchor-target>
-<p>Most of the configurations to support this Chromatic workflow are related to Azure DevOps. First, let&#x27;s create a new <doc-anchor-trigger to="#create-a-new-chromatic-project">Chromatic project</doc-anchor-trigger>, then, a new <doc-anchor-trigger to="#create-a-new-azure-pipeline">Azure pipeline</doc-anchor-trigger>.</p>
+<p>First, let&#x27;s create a new <doc-anchor-trigger to="#create-a-new-chromatic-project">Chromatic project</doc-anchor-trigger>, then set up your <doc-anchor-trigger to="#configure-your-project">VSCode project</doc-anchor-trigger>, and finally create an <doc-anchor-trigger to="#create-a-new-azure-pipeline">Azure pipeline</doc-anchor-trigger>.</p>
 <doc-anchor-target id="create-a-new-chromatic-project">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#create-a-new-chromatic-project">#</doc-anchor-trigger>
@@ -350,7 +350,7 @@
 </li>
 <li><p>Once created, login to <a href="https://www.chromatic.com/" class="outbound" target="_blank">Chromatic</a> and select your application project from the list.</p>
 </li>
-<li><p>Save your Chromatic project id. You can find the project id in the project URL under the <code v-pre>appId</code> parameter. For example, if your project id is <code v-pre>123</code>, the project URL would be: <code v-pre>https://www.chromatic.com/manage?appId=123</code>.</p>
+<li><p>Save your Chromatic project id. You can find the project id in the project URL under the <code v-pre>appId</code> parameter. For example, if your project id is <code v-pre>123</code>, the project URL would be <code v-pre>https://www.chromatic.com/manage?appId=123</code>.</p>
 </li>
 <li><p>Go to <code v-pre>Manage</code> &gt; <code v-pre>Configure</code> &gt; <code v-pre>Project</code> &gt; <code v-pre>Setup Chromatic with this project token</code> and save the project token.</p>
 </li>
@@ -369,11 +369,11 @@
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">chromatic.config.json</div>
 <pre class="language-json"><code v-pre class="language-json">{
-    &quot;projectId&quot;: &quot;YOUR_CHROMATIC_PROJECT_ID&quot;
+    &quot;projectId&quot;: &quot;&lt;YOUR_CHROMATIC_PROJECT_ID&gt;&quot;
 }</code></pre>
 </doc-codeblock></div>
 <ol start="2">
-<li>Replace <code v-pre>YOUR_CHROMATIC_PROJECT_ID</code> by your Chromatic project id.</li>
+<li>Replace <code v-pre>&lt;YOUR_CHROMATIC_PROJECT_ID&gt;</code> by your Chromatic project id.</li>
 </ol>
 <doc-anchor-target id="create-a-new-azure-pipeline">
     <h3>
@@ -495,7 +495,7 @@ steps:
 </doc-anchor-target>
 <p>To test your new Chromatic pipeline, follow these steps:</p>
 <ol>
-<li><p>Start a Chromatic build locally by opening a terminal at the root of the project and executing the following command: <code v-pre>pnpm chromatic --project-token &lt;YOUR_PROJECT_TOKEN&gt;</code>.</p>
+<li><p>Start a Chromatic build locally by opening a terminal at the root of the project and executing the following command: <code v-pre>pnpm chromatic --project-token &lt;YOUR_CHROMATIC_PROJECT_TOKEN&gt;</code>.</p>
 </li>
 <li><p>Go to the <a href="https://www.chromatic.com/start" class="outbound" target="_blank">Chromatic</a> application and accept all the changes to create a baseline. This guide assumes that your application already includes a few <a href="https://storybook.js.org/" class="outbound" target="_blank">Storybook</a> stories.</p>
 </li>
@@ -552,7 +552,14 @@ steps:
     CHROMATIC_DEBUG: true</code></pre>
 </doc-codeblock></div>
 <ul>
-<li>If issues persist, consider disabling <a href="https://www.chromatic.com/docs/turbosnap/" class="outbound" target="_blank">TurboSnap</a> by adding the <code v-pre>CHROMATIC_DISABLE_TURBOSNAP</code> environment variable the <code v-pre>chromatic.yml</code>. However, note that TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap:</li>
+<li><p>Verify that the <code v-pre>CHROMATIC_PROJECT_TOKEN</code> pipeline variable value is correct. To find your Chromatic project token, log in to <a href="https://www.chromatic.com/start" class="outbound" target="_blank">Chromatic</a>, select your project in the list, and go to <code v-pre>Manage</code> &gt; <code v-pre>Configure</code> &gt; <code v-pre>Project</code> and look for <code v-pre>Setup Chromatic with this project token</code>.</p>
+</li>
+<li><p>Confirm that that the <code v-pre>projectId</code> field in your <code v-pre>chromatic.config.json</code> file contains the correct project id. You can find the project id in the Chromatic project URL under the <code v-pre>appId</code> parameter. For example, if your project id is <code v-pre>123</code>, the project URL would be <code v-pre>https://www.chromatic.com/manage?appId=123</code>.</p>
+</li>
+<li><p>Ensure that the <code v-pre>PULL_REQUEST_COMMENT_ACCESS_TOKEN</code> pipeline variable value is a valid, non-expired token.</p>
+</li>
+<li><p>If issues persist, consider disabling <a href="https://www.chromatic.com/docs/turbosnap/" class="outbound" target="_blank">TurboSnap</a> by adding the <code v-pre>CHROMATIC_DISABLE_TURBOSNAP</code> environment variable the <code v-pre>chromatic.yml</code>. However, note that TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap:</p>
+</li>
 </ul>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">chromatic.yml</div>
@@ -565,14 +572,6 @@ steps:
     CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
     CHROMATIC_DISABLE_TURBOSNAP: true</code></pre>
 </doc-codeblock></div>
-<ul>
-<li><p>Verify that the <code v-pre>CHROMATIC_PROJECT_TOKEN</code> pipeline variable value is correct. To find your Chromatic project token, log in to <a href="https://www.chromatic.com/start" class="outbound" target="_blank">Chromatic</a>, select your project in the list, and go to <code v-pre>Manage</code> &gt; <code v-pre>Configure</code> &gt; <code v-pre>Project</code> and look for <code v-pre>Setup Chromatic with this project token</code>.</p>
-</li>
-<li><p>Confirm that that the <code v-pre>projectId</code> field in your <code v-pre>chromatic.config.json</code> file contains the correct project id. You can find the project id in the Chromatic project URL under the <code v-pre>appId</code> parameter. For example, if your project id is <code v-pre>123</code>, the project URL would be: <code v-pre>https://www.chromatic.com/manage?appId=123</code>.</p>
-</li>
-<li><p>Ensure that the <code v-pre>PULL_REQUEST_COMMENT_ACCESS_TOKEN</code> pipeline variable value is a valid, non-expired token.</p>
-</li>
-</ul>
 
                                 
                                 <!-- Required only on API pages -->
