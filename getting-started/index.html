@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/wl-chromatic-ado">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766113768284">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766115855760">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -34,12 +34,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../static/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.766113768284" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.766115855760" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766113768284" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766115855760" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766113768284" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766113768284" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766115855760" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766115855760" defer></script>
 
     <link href="https://gsoft-inc.github.io/wl-idp-docs-hub/static/retype-customization.css" rel="stylesheet" />
 
@@ -354,8 +354,26 @@
 </li>
 <li><p>In the left sidebar, choose &quot;Manage&quot; and click on the &quot;Configure&quot; tab. Go to the &quot;Project&quot; section and save the project token.</p>
 </li>
-<li><p>With the Chromatic project id and token in hands, process to the next section to create a new <doc-anchor-trigger to="#create-a-new-azure-pipeline">Chromatic Azure pipeline</doc-anchor-trigger>.</p>
+<li><p>With the Chromatic project id and token in hands, process to the next sections.</p>
 </li>
+</ol>
+<doc-anchor-target id="configure-your-project">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#configure-your-project">#</doc-anchor-trigger>
+        <span>Configure your project</span>
+    </h3>
+</doc-anchor-target>
+<ol>
+<li>Create a <code v-pre>chromatic.config.json</code> file at the root of your VSCode projet and paste the following content:</li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">chromatic.config.json</div>
+<pre class="language-json"><code v-pre class="language-json">{
+    &quot;projectId&quot;: &quot;YOUR_CHROMATIC_PROJECT_ID&quot;
+}</code></pre>
+</doc-codeblock></div>
+<ol start="2">
+<li>Replace <code v-pre>YOUR_CHROMATIC_PROJECT_ID</code> by your Chromatic project id.</li>
 </ol>
 <doc-anchor-target id="create-a-new-azure-pipeline">
     <h3>
@@ -487,13 +505,29 @@ steps:
 </li>
 <li><p>A Chromatic build should be automatically triggered for the pull request and a pull request comment with the visual change should be added to the pull request. The comment should mention that Chromatic detected at least one visual change.</p>
 </li>
+</ol>
+<div class="align-image-left"><p><figure class="content-center">
+    <img src="../static/chromatic-pr-notification.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+</div>
+<ol start="6">
 <li><p>In the pull request comment, click on the &quot;Build URL&quot; link. Accept the changes in the <a href="https://www.chromatic.com/start" class="outbound" target="_blank">Chromatic</a> application.</p>
 </li>
-<li><p>Re-queue the Chromatic pipeline by clicking on the &quot;Re-queue&quot; button of the pull request.</p>
+<li><p>Re-queue the Chromatic pipeline by clicking on the &quot;Re-queue&quot; button of the pipeline in the pull request.</p>
 </li>
+</ol>
+<div class="align-image-left"><p><figure class="content-center">
+    <img src="../static/requeue_chromatic_pipeline.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+</div>
+<ol start="8">
 <li><p>Once the Chromatic pipeline completed with success, merge the pull request.</p>
 </li>
-<li><p>Once merged, a new Chromatic build should be automatically triggered for the <code v-pre>main</code> branch. The changes of this new build should be automatically accepted and the pipeline should complete successfully.</p>
+<li><p>A new Chromatic build should be automatically triggered for the <code v-pre>main</code> branch. The changes of this new build should be automatically accepted by Chromatic and the pipeline should complete successfully.</p>
 </li>
 </ol>
 <doc-anchor-target id="troubleshoot-issues">
@@ -502,10 +536,43 @@ steps:
         <span>Troubleshoot issues</span>
     </h3>
 </doc-anchor-target>
-<p>-&gt; Add the debug env var</p>
-<p>-&gt; Make sure you have the right Chromatic project token</p>
-<p>-&gt; Make sure you have provided the Chromatic project id</p>
-<p>-&gt; Make sure your ADO access token is valid and not expired</p>
+<p>If you are experimenting issues with the Chromatic pipeline:</p>
+<ul>
+<li>Try adding the <code v-pre>CHROMATIC_DEBUG</code> environment variable to <code v-pre>chromatic.yml</code> and <a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/troubleshooting/review-logs?view=azure-devops&amp;tabs=windows-agent" class="outbound" target="_blank">diagnose the pipeline logs</a>:</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">chromatic.yml</div>
+<pre class="language-yaml" data-line="8"><code v-pre class="language-yaml">- task: CmdLine@2
+  displayName: Chromatic
+  inputs:
+    script: pnpm dlx @workleap/chromatic-ado
+  env:
+    CHROMATIC_PROJECT_TOKEN: $(CHROMATIC_PROJECT_TOKEN)
+    CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
+    CHROMATIC_DEBUG: true</code></pre>
+</doc-codeblock></div>
+<ul>
+<li>If its still not working, you could try disable <a href="https://www.chromatic.com/docs/turbosnap/" class="outbound" target="_blank">TurboSnap</a> by adding the <code v-pre>CHROMATIC_DISABLE_TURBOSNAP</code> environment variable. Be aware thought that you should re-enable TurboSnap as soon as possible as Chromatic snapshot are not cheap:</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">chromatic.yml</div>
+<pre class="language-yaml" data-line="8"><code v-pre class="language-yaml">- task: CmdLine@2
+  displayName: Chromatic
+  inputs:
+    script: pnpm dlx @workleap/chromatic-ado
+  env:
+    CHROMATIC_PROJECT_TOKEN: $(CHROMATIC_PROJECT_TOKEN)
+    CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
+    CHROMATIC_DISABLE_TURBOSNAP: true</code></pre>
+</doc-codeblock></div>
+<ul>
+<li><p>Make sure that the <code v-pre>CHROMATIC_PROJECT_TOKEN</code> pipeline variable value is correct. To find your Chromatic project token, login to <a href="https://www.chromatic.com/start" class="outbound" target="_blank">Chromatic</a>, then click on your project and go to <code v-pre>Manage</code> &gt; <code v-pre>Configure</code> and look for <code v-pre>Setup Chromatic with this project token</code>.</p>
+</li>
+<li><p>Make sure that the <code v-pre>projectId</code> field of your <code v-pre>chromatic.config.json</code> file has the right project id. The project id is available in the Chromatic project URL under the <code v-pre>appId</code> parameter. For example, if your project id is <code v-pre>123</code>, the project URL would be: <code v-pre>https://www.chromatic.com/manage?appId=123</code>.</p>
+</li>
+<li><p>Make sure that <code v-pre>PULL_REQUEST_COMMENT_ACCESS_TOKEN</code> pipeline variable value is a valid token that is not expired.</p>
+</li>
+</ul>
 
                                 
                                 <!-- Required only on API pages -->
