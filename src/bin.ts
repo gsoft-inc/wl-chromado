@@ -17,19 +17,19 @@ async function run() {
         const argv: string[] = process.argv.slice(2);
 
         if (argv.includes("--only-changed")) {
-            setResult(TaskResult.Failed, "--only-changed is added by default by @workleap/chromatic-ado.");
+            setResult(TaskResult.Failed, "--only-changed is added by default by @workleap/chromado.");
 
             return;
         }
 
         if (argv.includes("--auto-accept-changes")) {
-            setResult(TaskResult.Failed, "--auto-accept-changes is already handled by @workleap/chromatic-ado.");
+            setResult(TaskResult.Failed, "--auto-accept-changes is already handled by @workleap/chromado.");
 
             return;
         }
 
         if (argv.includes("--debug")) {
-            setResult(TaskResult.Failed, "--debug is bot supported by @workleap/chromatic-ado. Provide a \"CHROMATIC_DEBUG\" environment variable instead.");
+            setResult(TaskResult.Failed, "--debug is bot supported by @workleap/chromado. Provide a \"CHROMATIC_DEBUG\" environment variable instead.");
 
             return;
         }
@@ -59,13 +59,13 @@ async function run() {
         }
 
         if (isDebug) {
-            console.log("[chromatic-ado] Running Chromatic with the following arguments: ", argv.join(", "));
+            console.log("[chromado] Running Chromatic with the following arguments: ", argv.join(", "));
         }
 
         const output = await chromatic({ argv });
 
         if (isDebug) {
-            console.log(`[chromatic-ado] Chromatic exited with the following output: ${JSON.stringify(output, null, 2)}.`);
+            console.log(`[chromado] Chromatic exited with the following output: ${JSON.stringify(output, null, 2)}.`);
         }
 
         // 0 = OK
@@ -93,7 +93,7 @@ async function run() {
                     ? `${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"} has been automatically accepted.`
                     : "";
 
-                console.log(`[chromatic-ado] ${message}`);
+                console.log(`[chromado] ${message}`);
             }
 
             return;

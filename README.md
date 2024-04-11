@@ -4,7 +4,7 @@ A library to easily integrate [Chromatic](https://www.chromatic.com/) with [Azur
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
 [![CI](https://github.com/gsoft-inc/wl-chromado/actions/workflows/ci.yml/badge.svg)](https://github.com/gsoft-inc/wl-chromado/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/@workleap/chromatic-ado)](https://www.npmjs.com/package/@workleap/chromatic-ado)
+[![npm version](https://img.shields.io/npm/v/@workleap/chromado)](https://www.npmjs.com/package/@workleap/chromado)
 
 ## Have a question or found an issue?
 
