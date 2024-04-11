@@ -1,6 +1,6 @@
 ---
+order: 100
 icon: rocket
-expanded: true
 ---
 
 # Getting started
@@ -102,6 +102,10 @@ steps:
       CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
 ```
 
+!!!info
+Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuration-options) are accepted by the `@workleap/chromatic-ado` script. If an option is not accepted, the script will output an error message.
+!!!
+
 2.2. If your project doesn't include a template file to set up your pipelines, paste the following configuration:
 
 ```yaml #19,54,56-57 chromatic.yml
@@ -164,6 +168,10 @@ steps:
       CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
 ```
 
+!!!info
+Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuration-options) are accepted by the `@workleap/chromatic-ado` script. If an option is not accepted, the script will output an error message.
+!!!
+
 3. Create a new [Azure pipeline from an existing YAML file](https://www.nathannellans.com/post/azure-devops-yaml-pipelines-part-1). Name this new pipeline "Chromatic" or choose a name that best suits your project.
 
 4. Add the newly created Chromatic pipeline as a **required** [build validation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation) for your `main` branch. Ensure that the build validation is **required**. This is crucial as any visual changes detected by Chromatic will automatically be accepted on the main branch.
@@ -223,7 +231,7 @@ If you encounter issues with the Chromatic pipeline, follow these steps:
 
 - Ensure that the `PULL_REQUEST_COMMENT_ACCESS_TOKEN` pipeline variable value is a valid, non-expired token.
 
-- If issues persist, consider disabling [TurboSnap](https://www.chromatic.com/docs/turbosnap/) by adding the `CHROMATIC_DISABLE_TURBOSNAP` environment variable the `chromatic.yml`. However, note that TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap:
+- If issues persist, consider disabling [TurboSnap](https://www.chromatic.com/docs/turbosnap/) by adding the `CHROMATIC_DISABLE_TURBOSNAP` environment variable the `chromatic.yml`:
 
 ```yaml !#8 chromatic.yml
 - task: CmdLine@2
@@ -235,6 +243,10 @@ If you encounter issues with the Chromatic pipeline, follow these steps:
     CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
     CHROMATIC_DISABLE_TURBOSNAP: true
 ```
+
+!!!info
+Note that TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap.
+!!!
 
 
 
