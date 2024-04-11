@@ -5,17 +5,17 @@ expanded: true
 
 # Getting started
 
-Welcome to the `@workleap/chromatic-ado` package documentation. In this getting started page, you'll find information about how this package can enhance your [Chromatic](https://www.chromatic.com/) + [Azure Pipelines](https://azure.microsoft.com/en-ca/products/devops/pipelines) integration and how to setup this package for your environment.
+Welcome to the `@workleap/chromatic-ado` package documentation. On this page, you'll discover how this package can optimize your [Chromatic](https://www.chromatic.com/) + [Azure Pipelines](https://azure.microsoft.com/en-ca/products/devops/pipelines) integration and learn how to set it up for your environment.
 
 ## Features
 
-This package aims to offer a workflow similar to the native Chromatic [GitHub integration](https://www.chromatic.com/docs/github-actions/). While it's hardly as good, it will get you up and running with an adequate workflow until Chromatic offers a native Azure Pipelines integration.
+This package aims to provide a workflow similar to the native Chromatic [GitHub integration](https://www.chromatic.com/docs/github-actions/). While it's hardly as good, it's a functional workflow until Chromatic offers a native Azure Pipelines integration.
 
 ### Build notifications
 
-Chromatic Azure Pipelines [documentation](https://www.chromatic.com/docs/azure-pipelines/) explains how to integrate Chromatic within an existing pipeline through its CLI, but it's basically it, there's no build notifications, it's up to you to figure out this part.
+The Chromatic Azure Pipelines [documentation](https://www.chromatic.com/docs/azure-pipelines/) explains how to integrate Chromatic within an existing pipeline through its CLI, but it's basically it, it lacks build notifications, it's up to you to figure out this part.
 
-This is an important feature of this package, it figures out this part for you by providing build notifications as pull request comments whenever a build is completed:
+This package resolves this by automatically providing build notifications as pull request comments whenever a Chromatic build is completed:
 
 :::align-image-left
 ![Pull request notification example](./static/chromatic-pr-notification.png)
@@ -27,33 +27,33 @@ This package is compatible with [TurboSnap](https://www.chromatic.com/docs/turbo
 
 ### Squash merge
 
-Chromatic doesn't offer any mechanism to support [squash merge](https://learn.microsoft.com/en-us/azure/devops/repos/git/merging-with-squash?view=azure-devops) on Azure DevOps. It means that by default, when using Azure DevOps as a Git provider, if you wish to keep your Chromatic [baselines](https://www.chromatic.com/docs/branching-and-baselines/) up-to-date, you would be constrained to merge your pull requests with regular merge commits. Fortunately, this package implements a workflow based on Chromatic [auto-accept-changes](https://www.chromatic.com/docs/azure-pipelines/#azure-squashrebase-merge-and-the-main-branch) feature, allowing pull requests to complete with squash merges.
+Chromatic doesn't offer any mechanism to support [squash merge](https://learn.microsoft.com/en-us/azure/devops/repos/git/merging-with-squash?view=azure-devops) on Azure DevOps. This means that when using Azure DevOps as a Git provider, if you wish to keep your Chromatic [baselines](https://www.chromatic.com/docs/branching-and-baselines/) up-to-date, you would be constrained to merging your pull requests with regular merge commits. Fortunately, this package implements a workflow based on Chromatic's [auto-accept-changes](https://www.chromatic.com/docs/azure-pipelines/#azure-squashrebase-merge-and-the-main-branch) feature, allowing pull requests to be completed with squash merges.
 
 Here's how it works:
 
-1. Whenever you create or update a pull request, a Chromatic build will automatically be triggered. If the build fail, the Chromatic pipeline will fail and the team will have to either accept the changes or fix the issues before completing the pull request. If the changes are accepted, unfortunately the `main` branch [baselines](https://www.chromatic.com/docs/branching-and-baselines/) would not be updated.
+1. Whenever you create or update a pull request, a Chromatic build will automatically be triggered. If the build fails, the Chromatic pipeline will fail, and the team will need to either accept the changes or fix the issues before completing the pull request. If the changes are accepted, unfortunately the `main` branch [baselines](https://www.chromatic.com/docs/branching-and-baselines/) will not be updated.
 
-2. To update the baselines of the `main` branch, once the pull request has been merged, a new Chromatic build will be triggered on the `main` branch. This new build will automatically accepts all the changes (its fine since they have been reviewed in the pull request) and update the `main` branch baselines.
+2. To update the baselines of the `main` branch, once the pull request has been merged, a new Chromatic build will be triggered on the `main` branch. This new build will automatically accept all the changes (which is fine since they have been reviewed in the pull request) and update the `main` branch baselines.
 
-## Setup your workflow
+## Setting up your workflow
 
-Most of the configurations to support this Chromatic workflow is related to Azure DevOps. First, let's create a new [Chromatic project](#create-a-new-chromatic-project), then, a new [Azure pipeline](#create-a-new-azure-pipeline).
+Most of the configurations to support this Chromatic workflow are related to Azure DevOps. First, let's create a new [Chromatic project](#create-a-new-chromatic-project), then, a new [Azure pipeline](#create-a-new-azure-pipeline).
 
 ### Create a new Chromatic project
 
-1. Ask the owner of the Chromatic `gsoft-inc-ado` organization to create a new Chromatic project for your application. Make sure to be added as "collaborator" of the new project.
+1. Request the owner of the Chromatic `gsoft-inc-ado` organization to create a new Chromatic project for your application. Ensure that you are added as a "collaborator" to the new project.
 
 2. Once created, login to [Chromatic](https://www.chromatic.com/) and select your application project from the list.
 
-3. Save your Chromatic project id. The project id is available in the project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be: `https://www.chromatic.com/manage?appId=123`.
+3. Save your Chromatic project id. You can find the project id in the project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be: `https://www.chromatic.com/manage?appId=123`.
 
-4. In the left sidebar, choose "Manage" and click on the "Configure" tab. Go to the "Project" section and save the project token.
+4. Go to `Manage` > `Configure` > `Project` > `Setup Chromatic with this project token` and save the project token.
 
-5. With the Chromatic project id and token in hands, process to the next sections.
+5. With the Chromatic project id and token in hand, proceed to the next sections.
 
 ### Configure your project
 
-1. Create a `chromatic.config.json` file at the root of your VSCode projet and paste the following content:
+1. Create a `chromatic.config.json` file at the root of your VSCode project and paste the following content:
 
 ```json chromatic.config.json
 {
@@ -67,7 +67,7 @@ Most of the configurations to support this Chromatic workflow is related to Azur
 
 1. First, open your application project and create a new YAML file called `chromatic.yml`. This file will store the configuration of your Chromatic Azure pipeline.
 
-2.1. If your project already includes a [template file](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops&pivots=templates-includes) to setup your pipelines, then paste the following configuration:
+2.1. If your project already includes a [template file](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops&pivots=templates-includes) to set up your pipelines, then paste the following configuration:
 
 ```yaml !#19,22,27,29-30 chromatic.yml
 # Run Chromatic on the "main" branch after a pull request has been merged
@@ -102,7 +102,7 @@ steps:
       CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
 ```
 
-2.2. If your project doesn't have a setup template, paste the following configuration:
+2.2. If your project doesn't include a template file to set up your pipelines, paste the following configuration:
 
 ```yaml #19,54,56-57 chromatic.yml
 # Run Chromatic on the "main" branch after a pull request has been merged
@@ -164,25 +164,25 @@ steps:
       CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
 ```
 
-3. Create a new [Azure pipeline from an existing YAML file](https://www.nathannellans.com/post/azure-devops-yaml-pipelines-part-1). Name this new pipeline "Chromatic" (or actually, whichever suits you best).
+3. Create a new [Azure pipeline from an existing YAML file](https://www.nathannellans.com/post/azure-devops-yaml-pipelines-part-1). Name this new pipeline "Chromatic" or choose a name that best suits your project.
 
-4. Add the newly created Chromatic pipeline as a **required** [build validation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation) of your `main` branch. Make sure the build validation is **required**, this is important as the visual changes detected by Chromatic will be automatically accepted on the `main` branch.
+4. Add the newly created Chromatic pipeline as a **required** [build validation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation) for your `main` branch. Ensure that the build validation is **required**. This is crucial as any visual changes detected by Chromatic will automatically be accepted on the main branch.
 
-5. Add the Chromatic project id and token that we saved earlier as [pipeline variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/yaml-pipeline-editor?view=azure-devops#manage-pipeline-variables) of the newly created Chromatic pipeline. These variables should respectively be named `CHROMATIC_PROJECT_TOKEN` and `CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN`. You could also optionally create the `CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN` variable as a [variable group](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash#set-a-secret-variable-in-a-variable-group).
+5. Integrate the Chromatic project id and token, saved earlier, as [pipeline variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/yaml-pipeline-editor?view=azure-devops#manage-pipeline-variables) of the newly created Chromatic pipeline. These variables should be named `CHROMATIC_PROJECT_TOKEN` and `CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN`, respectively. Optionally, you can create the `CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN` variable as a [variable group](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash#set-a-secret-variable-in-a-variable-group).
 
 ## Try it :rocket:
 
-To test your new Chromatic pipeline, execute the following steps:
+To test your new Chromatic pipeline, follow these steps:
 
-1. Locally start a Chromatic build by opening a terminal at the root of the project and executing the following command: `pnpm chromatic --project-token <YOUR_PROJECT_TOKEN>`.
+1. Start a Chromatic build locally by opening a terminal at the root of the project and executing the following command: `pnpm chromatic --project-token <YOUR_PROJECT_TOKEN>`.
 
-2. Go to the [Chromatic](https://www.chromatic.com/start) application and accepts all the changes to create a baseline. This guide takes for granted that your application already includes a few Storybook stories.
+2. Go to the [Chromatic](https://www.chromatic.com/start) application and accept all the changes to create a baseline. This guide assumes that your application already includes a few [Storybook](https://storybook.js.org/) stories.
 
-3. Switch to a new Git branch and update an existing component watched by Chromatic to trigger a visual change. Commit the change.
+3. Move to a new Git branch and update an existing component watched by Chromatic to trigger a visual change. Commit the change.
 
-4. Go to Azure Devops and create a pull request for your new branch.
+4. Create a pull request for your new branch in Azure DevOps.
 
-5. A Chromatic build should be automatically triggered for the pull request and a pull request comment with the visual change should be added to the pull request. The comment should mention that Chromatic detected at least one visual change.
+5. A Chromatic build should automatically trigger for the pull request, and a comment with the visual change should be added to it. The comment should indicate that Chromatic detected at least one visual change.
 
 :::align-image-left
 ![](./static/chromatic-pr-notification.png)
@@ -196,15 +196,15 @@ To test your new Chromatic pipeline, execute the following steps:
 ![](./static/requeue_chromatic_pipeline.png)
 :::
 
-8. Once the Chromatic pipeline completed with success, merge the pull request.
+8. Once the Chromatic pipeline completes successfully, merge the pull request.
 
-9. A new Chromatic build should be automatically triggered for the `main` branch. The changes of this new build should be automatically accepted by Chromatic and the pipeline should complete successfully.
+9. A new Chromatic build should automatically trigger for the `main` branch. The changes from this new build should be automatically accepted by Chromatic, and the pipeline should complete successfully.
 
 ### Troubleshoot issues
 
-If you are experimenting issues with the Chromatic pipeline:
+If you encounter issues with the Chromatic pipeline, follow these steps:
 
-- Try adding the `CHROMATIC_DEBUG` environment variable to `chromatic.yml` and [diagnose the pipeline logs](https://learn.microsoft.com/en-us/azure/devops/pipelines/troubleshooting/review-logs?view=azure-devops&tabs=windows-agent):
+- Try adding the `CHROMATIC_DEBUG` environment variable to `chromatic.yml` and review the [the pipeline logs](https://learn.microsoft.com/en-us/azure/devops/pipelines/troubleshooting/review-logs?view=azure-devops&tabs=windows-agent) for diagnosis:
 
 ```yaml !#8 chromatic.yml
 - task: CmdLine@2
@@ -217,7 +217,7 @@ If you are experimenting issues with the Chromatic pipeline:
     CHROMATIC_DEBUG: true
 ```
 
-- If its still not working, you could try disable [TurboSnap](https://www.chromatic.com/docs/turbosnap/) by adding the `CHROMATIC_DISABLE_TURBOSNAP` environment variable. Be aware thought that you should re-enable TurboSnap as soon as possible as Chromatic snapshot are not cheap:
+- If issues persist, consider disabling [TurboSnap](https://www.chromatic.com/docs/turbosnap/) by adding the `CHROMATIC_DISABLE_TURBOSNAP` environment variable the `chromatic.yml`. However, note that TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap:
 
 ```yaml !#8 chromatic.yml
 - task: CmdLine@2
@@ -230,11 +230,11 @@ If you are experimenting issues with the Chromatic pipeline:
     CHROMATIC_DISABLE_TURBOSNAP: true
 ```
 
-- Make sure that the `CHROMATIC_PROJECT_TOKEN` pipeline variable value is correct. To find your Chromatic project token, login to [Chromatic](https://www.chromatic.com/start), then click on your project and go to `Manage` > `Configure` and look for `Setup Chromatic with this project token`.
+- Verify that the `CHROMATIC_PROJECT_TOKEN` pipeline variable value is correct. To find your Chromatic project token, log in to [Chromatic](https://www.chromatic.com/start), select your project in the list, and go to `Manage` > `Configure` > `Project` and look for `Setup Chromatic with this project token`.
 
-- Make sure that the `projectId` field of your `chromatic.config.json` file has the right project id. The project id is available in the Chromatic project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be: `https://www.chromatic.com/manage?appId=123`.
+- Confirm that that the `projectId` field in your `chromatic.config.json` file contains the correct project id. You can find the project id in the Chromatic project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be: `https://www.chromatic.com/manage?appId=123`.
 
-- Make sure that `PULL_REQUEST_COMMENT_ACCESS_TOKEN` pipeline variable value is a valid token that is not expired.
+- Ensure that the `PULL_REQUEST_COMMENT_ACCESS_TOKEN` pipeline variable value is a valid, non-expired token.
 
 
 
