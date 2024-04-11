@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 1.0.0
+
+### Major Changes
+
+- [`5667e3f`](https://github.com/gsoft-inc/wl-chromatic-ado/commit/5667e3ff0a943297dfb28ec4b9e10cfaa0115500) Thanks [@patricklafrance](https://github.com/patricklafrance)! - First major release and rebranding to @workleap/chromado
+
 ## 0.0.18
 
 ### Patch Changes
