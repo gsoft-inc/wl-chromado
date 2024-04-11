@@ -37,7 +37,7 @@ Here's how it works:
 
 ## Setting up your workflow
 
-Most of the configurations to support this Chromatic workflow are related to Azure DevOps. First, let's create a new [Chromatic project](#create-a-new-chromatic-project), then, a new [Azure pipeline](#create-a-new-azure-pipeline).
+First, let's create a new [Chromatic project](#create-a-new-chromatic-project), then set up your [VSCode project](#configure-your-project), and finally create an [Azure pipeline](#create-a-new-azure-pipeline).
 
 ### Create a new Chromatic project
 
@@ -45,7 +45,7 @@ Most of the configurations to support this Chromatic workflow are related to Azu
 
 2. Once created, login to [Chromatic](https://www.chromatic.com/) and select your application project from the list.
 
-3. Save your Chromatic project id. You can find the project id in the project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be: `https://www.chromatic.com/manage?appId=123`.
+3. Save your Chromatic project id. You can find the project id in the project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be `https://www.chromatic.com/manage?appId=123`.
 
 4. Go to `Manage` > `Configure` > `Project` > `Setup Chromatic with this project token` and save the project token.
 
@@ -57,11 +57,11 @@ Most of the configurations to support this Chromatic workflow are related to Azu
 
 ```json chromatic.config.json
 {
-    "projectId": "YOUR_CHROMATIC_PROJECT_ID"
+    "projectId": "<YOUR_CHROMATIC_PROJECT_ID>"
 }
 ```
 
-2. Replace `YOUR_CHROMATIC_PROJECT_ID` by your Chromatic project id.
+2. Replace `<YOUR_CHROMATIC_PROJECT_ID>` by your Chromatic project id.
 
 ### Create a new Azure pipeline
 
@@ -174,7 +174,7 @@ steps:
 
 To test your new Chromatic pipeline, follow these steps:
 
-1. Start a Chromatic build locally by opening a terminal at the root of the project and executing the following command: `pnpm chromatic --project-token <YOUR_PROJECT_TOKEN>`.
+1. Start a Chromatic build locally by opening a terminal at the root of the project and executing the following command: `pnpm chromatic --project-token <YOUR_CHROMATIC_PROJECT_TOKEN>`.
 
 2. Go to the [Chromatic](https://www.chromatic.com/start) application and accept all the changes to create a baseline. This guide assumes that your application already includes a few [Storybook](https://storybook.js.org/) stories.
 
@@ -217,6 +217,12 @@ If you encounter issues with the Chromatic pipeline, follow these steps:
     CHROMATIC_DEBUG: true
 ```
 
+- Verify that the `CHROMATIC_PROJECT_TOKEN` pipeline variable value is correct. To find your Chromatic project token, log in to [Chromatic](https://www.chromatic.com/start), select your project in the list, and go to `Manage` > `Configure` > `Project` and look for `Setup Chromatic with this project token`.
+
+- Confirm that that the `projectId` field in your `chromatic.config.json` file contains the correct project id. You can find the project id in the Chromatic project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be `https://www.chromatic.com/manage?appId=123`.
+
+- Ensure that the `PULL_REQUEST_COMMENT_ACCESS_TOKEN` pipeline variable value is a valid, non-expired token.
+
 - If issues persist, consider disabling [TurboSnap](https://www.chromatic.com/docs/turbosnap/) by adding the `CHROMATIC_DISABLE_TURBOSNAP` environment variable the `chromatic.yml`. However, note that TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap:
 
 ```yaml !#8 chromatic.yml
@@ -229,12 +235,6 @@ If you encounter issues with the Chromatic pipeline, follow these steps:
     CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
     CHROMATIC_DISABLE_TURBOSNAP: true
 ```
-
-- Verify that the `CHROMATIC_PROJECT_TOKEN` pipeline variable value is correct. To find your Chromatic project token, log in to [Chromatic](https://www.chromatic.com/start), select your project in the list, and go to `Manage` > `Configure` > `Project` and look for `Setup Chromatic with this project token`.
-
-- Confirm that that the `projectId` field in your `chromatic.config.json` file contains the correct project id. You can find the project id in the Chromatic project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be: `https://www.chromatic.com/manage?appId=123`.
-
-- Ensure that the `PULL_REQUEST_COMMENT_ACCESS_TOKEN` pipeline variable value is a valid, non-expired token.
 
 
 
