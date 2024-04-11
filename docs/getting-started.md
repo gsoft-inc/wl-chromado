@@ -49,7 +49,19 @@ Most of the configurations to support this Chromatic workflow is related to Azur
 
 4. In the left sidebar, choose "Manage" and click on the "Configure" tab. Go to the "Project" section and save the project token.
 
-5. With the Chromatic project id and token in hands, process to the next section to create a new [Chromatic Azure pipeline](#create-a-new-azure-pipeline).
+5. With the Chromatic project id and token in hands, process to the next sections.
+
+### Configure your project
+
+1. Create a `chromatic.config.json` file at the root of your VSCode projet and paste the following content:
+
+```json chromatic.config.json
+{
+    "projectId": "YOUR_CHROMATIC_PROJECT_ID"
+}
+```
+
+2. Replace `YOUR_CHROMATIC_PROJECT_ID` by your Chromatic project id.
 
 ### Create a new Azure pipeline
 
@@ -172,25 +184,57 @@ To test your new Chromatic pipeline, execute the following steps:
 
 5. A Chromatic build should be automatically triggered for the pull request and a pull request comment with the visual change should be added to the pull request. The comment should mention that Chromatic detected at least one visual change.
 
+:::align-image-left
+![](./static/chromatic-pr-notification.png)
+:::
+
 6. In the pull request comment, click on the "Build URL" link. Accept the changes in the [Chromatic](https://www.chromatic.com/start) application.
 
-7. Re-queue the Chromatic pipeline by clicking on the "Re-queue" button of the pull request.
+7. Re-queue the Chromatic pipeline by clicking on the "Re-queue" button of the pipeline in the pull request.
+
+:::align-image-left
+![](./static/requeue_chromatic_pipeline.png)
+:::
 
 8. Once the Chromatic pipeline completed with success, merge the pull request.
 
-9. Once merged, a new Chromatic build should be automatically triggered for the `main` branch. The changes of this new build should be automatically accepted and the pipeline should complete successfully.
+9. A new Chromatic build should be automatically triggered for the `main` branch. The changes of this new build should be automatically accepted by Chromatic and the pipeline should complete successfully.
 
 ### Troubleshoot issues
 
+If you are experimenting issues with the Chromatic pipeline:
 
+- Try adding the `CHROMATIC_DEBUG` environment variable to `chromatic.yml` and [diagnose the pipeline logs](https://learn.microsoft.com/en-us/azure/devops/pipelines/troubleshooting/review-logs?view=azure-devops&tabs=windows-agent):
 
--> Add the debug env var
+```yaml !#8 chromatic.yml
+- task: CmdLine@2
+  displayName: Chromatic
+  inputs:
+    script: pnpm dlx @workleap/chromatic-ado
+  env:
+    CHROMATIC_PROJECT_TOKEN: $(CHROMATIC_PROJECT_TOKEN)
+    CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
+    CHROMATIC_DEBUG: true
+```
 
--> Make sure you have the right Chromatic project token
+- If its still not working, you could try disable [TurboSnap](https://www.chromatic.com/docs/turbosnap/) by adding the `CHROMATIC_DISABLE_TURBOSNAP` environment variable. Be aware thought that you should re-enable TurboSnap as soon as possible as Chromatic snapshot are not cheap:
 
--> Make sure you have provided the Chromatic project id
+```yaml !#8 chromatic.yml
+- task: CmdLine@2
+  displayName: Chromatic
+  inputs:
+    script: pnpm dlx @workleap/chromatic-ado
+  env:
+    CHROMATIC_PROJECT_TOKEN: $(CHROMATIC_PROJECT_TOKEN)
+    CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
+    CHROMATIC_DISABLE_TURBOSNAP: true
+```
 
--> Make sure your ADO access token is valid and not expired
+- Make sure that the `CHROMATIC_PROJECT_TOKEN` pipeline variable value is correct. To find your Chromatic project token, login to [Chromatic](https://www.chromatic.com/start), then click on your project and go to `Manage` > `Configure` and look for `Setup Chromatic with this project token`.
+
+- Make sure that the `projectId` field of your `chromatic.config.json` file has the right project id. The project id is available in the Chromatic project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be: `https://www.chromatic.com/manage?appId=123`.
+
+- Make sure that `PULL_REQUEST_COMMENT_ACCESS_TOKEN` pipeline variable value is a valid token that is not expired.
 
 
 
