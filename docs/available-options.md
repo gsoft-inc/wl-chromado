@@ -39,5 +39,5 @@ Add the `CHROMATIC_DISABLE_TURBOSNAP` environment variable to your `chromatic.ym
 ```
 
 !!!info
-Note that we strongly encourage using TurboSnap as Chromatic snapshots are not cheap.
+We strongly encourage using TurboSnap as Chromatic snapshots are not cheap.
 !!!

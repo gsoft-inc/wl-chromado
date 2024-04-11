@@ -227,7 +227,7 @@ If you encounter issues with the Chromatic pipeline, follow these steps:
 
 - Verify that the `CHROMATIC_PROJECT_TOKEN` pipeline variable value is correct. To find your Chromatic project token, log in to [Chromatic](https://www.chromatic.com/start), select your project in the list, and go to `Manage` > `Configure` > `Project` and look for `Setup Chromatic with this project token`.
 
-- Confirm that that the `projectId` field in your `chromatic.config.json` file contains the correct project id. You can find the project id in the Chromatic project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be `https://www.chromatic.com/manage?appId=123`.
+- Confirm that the `projectId` field in your `chromatic.config.json` file contains the correct project id. You can find the project id in the Chromatic project URL under the `appId` parameter. For example, if your project id is `123`, the project URL would be `https://www.chromatic.com/manage?appId=123`.
 
 - Ensure that the `PULL_REQUEST_COMMENT_ACCESS_TOKEN` pipeline variable value is a valid, non-expired token.
 
@@ -245,7 +245,7 @@ If you encounter issues with the Chromatic pipeline, follow these steps:
 ```
 
 !!!info
-Note that TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap.
+TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap.
 !!!
 
 
