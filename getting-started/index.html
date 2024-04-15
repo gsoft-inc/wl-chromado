@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/wl-chromado">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766511220301">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766511329580">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -34,12 +34,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../static/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.766511220301" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.766511329580" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766511220301" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766511329580" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766511220301" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766511220301" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766511329580" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766511329580" defer></script>
 
     <link href="https://gsoft-inc.github.io/wl-idp-docs-hub/static/retype-customization.css" rel="stylesheet" />
 
@@ -586,7 +586,7 @@ steps:
         <span>Troubleshoot issues</span>
     </h3>
 </doc-anchor-target>
-<p>If you encounter <code v-pre>pnpm-lock.yaml [file] (not found)</code> when executing the Chromatic pipeline, ensure that the pipeline point to the exact location of your project <code v-pre>package-lock.yaml</code> file. For example, if your <code v-pre>package-lock.yaml</code> is nested under a <code v-pre>/frontend</code> nested path, update <code v-pre>key: '&quot;pnpm&quot; | &quot;$(Agent.OS)&quot; | pnpm-lock.yaml'</code> for <code v-pre>key: '&quot;pnpm&quot; | &quot;$(Agent.OS)&quot; | $(System.DefaultWorkingDirectory)/frontend/pnpm-lock.yaml'</code>.</p>
+<p>If you encounter <code v-pre>pnpm-lock.yaml [file] (not found)</code> when executing the Chromatic pipeline, ensure that the pipeline point to the exact location of your project <code v-pre>package-lock.yaml</code> file. For example, if your <code v-pre>package-lock.yaml</code> is nested under a <code v-pre>/frontend</code>, update <code v-pre>key: '&quot;pnpm&quot; | &quot;$(Agent.OS)&quot; | pnpm-lock.yaml'</code> for <code v-pre>key: '&quot;pnpm&quot; | &quot;$(Agent.OS)&quot; | $(System.DefaultWorkingDirectory)/frontend/pnpm-lock.yaml'</code>.</p>
 <p>If you encounter any other issues with the Chromatic pipeline, follow these steps:</p>
 <ul>
 <li>Try adding the <code v-pre>CHROMATIC_DEBUG</code> environment variable to <code v-pre>chromatic.yml</code> and review the <a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/troubleshooting/review-logs?view=azure-devops&amp;tabs=windows-agent" class="outbound" target="_blank">the pipeline logs</a> for diagnosis:</li>
