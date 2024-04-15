@@ -178,6 +178,10 @@ Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuratio
 
 5. Integrate the Chromatic project id and token, saved earlier, as [pipeline variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/yaml-pipeline-editor?view=azure-devops#manage-pipeline-variables) of the newly created Chromatic pipeline. These variables should be named `CHROMATIC_PROJECT_TOKEN` and `CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN`, respectively. Optionally, you can create the `CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN` variable as a [variable group](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash#set-a-secret-variable-in-a-variable-group).
 
+| Variable | Permissions |
+| --- | --- |
+| `CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN` | **Pull Request Threads**: Read & Write |
+
 ## Try it :rocket:
 
 To test your new Chromatic pipeline, follow these steps:
