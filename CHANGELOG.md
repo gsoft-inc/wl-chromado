@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 1.0.1
+
+### Patch Changes
+
+- [`1752b4a`](https://github.com/gsoft-inc/wl-chromado/commit/1752b4aab74843ce3054edbc4456697fd6cbbde7) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Fixing a few typos after the rebranding to Chromado.
+
 ## 1.0.0
 
 ### Major Changes
