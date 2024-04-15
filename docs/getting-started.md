@@ -214,7 +214,7 @@ To test your new Chromatic pipeline, follow these steps:
 
 ### Troubleshoot issues
 
-If you encounter `pnpm-lock.yaml [file] (not found)` when executing the Chromatic pipeline, ensure that the pipeline point to the exact location of your project `package-lock.yaml` file. For example, if your `package-lock.yaml` is nested under a `/frontend` nested path, update `key: '"pnpm" | "$(Agent.OS)" | pnpm-lock.yaml'` for `key: '"pnpm" | "$(Agent.OS)" | $(System.DefaultWorkingDirectory)/frontend/pnpm-lock.yaml'`.
+If you encounter `pnpm-lock.yaml [file] (not found)` when executing the Chromatic pipeline, ensure that the pipeline point to the exact location of your project `package-lock.yaml` file. For example, if your `package-lock.yaml` is nested under a `/frontend`, update `key: '"pnpm" | "$(Agent.OS)" | pnpm-lock.yaml'` for `key: '"pnpm" | "$(Agent.OS)" | $(System.DefaultWorkingDirectory)/frontend/pnpm-lock.yaml'`.
 
 If you encounter any other issues with the Chromatic pipeline, follow these steps:
 
