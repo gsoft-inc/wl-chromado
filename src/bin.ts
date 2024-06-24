@@ -13,22 +13,33 @@ async function run() {
     try {
         const isDebug = getVariable("CHROMATIC_DEBUG");
 
+        if (isDebug) {
+            console.log("DEBUG IS ON");
+        }
+        
+        if (!getVariable("CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN")) {
+            console.error("CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN is missing")
+        }
+
         // This script accepts additional Chromatic CLI arguments.
         const argv: string[] = process.argv.slice(2);
 
         if (argv.includes("--only-changed")) {
+            console.error("--only-changed is added by default by @workleap/chromado.");
             setResult(TaskResult.Failed, "--only-changed is added by default by @workleap/chromado.");
 
             return;
         }
 
         if (argv.includes("--auto-accept-changes")) {
+            console.error("--auto-accept-changes is already handled by @workleap/chromado.");
             setResult(TaskResult.Failed, "--auto-accept-changes is already handled by @workleap/chromado.");
 
             return;
         }
 
         if (argv.includes("--debug")) {
+            console.error("--debug is bot supported by @workleap/chromado. Provide a \"CHROMATIC_DEBUG\" environment variable instead.");
             setResult(TaskResult.Failed, "--debug is bot supported by @workleap/chromado. Provide a \"CHROMATIC_DEBUG\" environment variable instead.");
 
             return;
@@ -73,6 +84,7 @@ async function run() {
         // 2 = There are components errors
         // For additional information about Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.
         if (output.code !== 0 && output.code !== 1 && output.code !== 2) {
+            console.error(`Chromatic exited with code "${output.code}". For additional information about Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
             setResult(TaskResult.Failed, `Chromatic exited with code "${output.code}". For additional information about Chromatic exit codes, view: https://www.chromatic.com/docs/cli/#exit-codes.`);
 
             return;
@@ -80,6 +92,7 @@ async function run() {
 
         // Usually happens when Chromatic skip the build because it detected that a build for the same commit has already been done.
         if (output.url === undefined && output.storybookUrl === undefined) {
+            console.error("A build for the same commit as the last build on the branch is considered a rebuild. You can override this using the --force-rebuild flag.");
             setResult(TaskResult.Succeeded, "A build for the same commit as the last build on the branch is considered a rebuild. You can override this using the --force-rebuild flag.");
 
             return;
@@ -145,24 +158,29 @@ ${output.changeCount === 0
 </div>
 `;
 
+        console.log("Posting comment to thread...");
         await postThread(comment, {
             id: "CHROMATIC_THREAD_ID",
             accessToken: getVariable("CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN")
         });
 
         if (output.errorCount > 0) {
+            console.error(`${output.errorCount} ${output.errorCount === 1 ? "test" : "tests"} failed.`);
             setResult(TaskResult.Failed, `${output.errorCount} ${output.errorCount === 1 ? "test" : "tests"} failed.`);
         }
 
         if (output.changeCount > 0) {
+            console.log(`Found ${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"}. Review the ${output.changeCount === 1 ? "change" : "changes"} and re-queue the build to proceed.`);
             const message = `Found ${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"}. Review the ${output.changeCount === 1 ? "change" : "changes"} and re-queue the build to proceed.`;
 
             setResult(TaskResult.Failed, message);
         }
     } catch (error) {
         if (error instanceof Error) {
+            console.error(error.message);
             setResult(TaskResult.Failed, error.message);
         } else {
+            console.error(`An unknown error occured: ${error}`);
             setResult(TaskResult.Failed, `An unknown error occured: ${error}`);
         }
     }
