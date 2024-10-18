@@ -31,7 +31,7 @@ As a general rule, once a PR is open and ready for review, there should be **no 
 
 To help with this, if you need to share a PR that isn’t ready for review, you can open it as a [draft](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser#create-draft-prs). The Chromatic CLI "step" will not run for PRs marked as "draft".
 
-> If you expect to use "draft" PR, make sure to either add the `drafts: false` to your pipeline configuration or that your build policies do not run for "draft" PRs.
+> If you expect to use "draft" PR, make sure to either add `drafts: false` to your pipeline configuration or that your build policies do not run for "draft" PRs.
 
 ## Create small, fast-merging PRs for changes that disable TurboSnap
 
