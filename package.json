@@ -29,30 +29,30 @@
         "dev-docs": "retype start",
         "clean": "pnpm exec pnpm dlx rimraf dist node_modules/.cache",
         "reset": "pnpm clean && pnpm dlx rimraf node_modules pnpm-lock.yaml",
-        "list-outdated-deps": "pnpm outdated --format list",
-        "update-outdated-deps": "pnpm update --latest"
+        "list-outdated-deps": "pnpm outdated --format list !eslint",
+        "update-outdated-deps": "pnpm update --latest !eslint"
     },
     "devDependencies": {
         "@changesets/changelog-github": "0.5.0",
-        "@changesets/cli": "2.27.1",
-        "@types/node": "20.12.2",
-        "@typescript-eslint/parser": "7.5.0",
-        "@workleap/eslint-plugin": "3.2.1",
+        "@changesets/cli": "2.27.9",
+        "@types/node": "22.7.6",
+        "@typescript-eslint/parser": "8.10.0",
+        "@workleap/eslint-plugin": "3.2.2",
         "@workleap/tsup-configs": "3.0.6",
         "@workleap/typescript-configs": "3.0.2",
         "eslint": "8.57.0",
         "installed-check": "9.3.0",
-        "knip": "5.7.0",
-        "retypeapp": "3.5.0",
-        "tsup": "8.0.2",
-        "typescript": "5.4.3"
+        "knip": "5.33.3",
+        "retypeapp": "3.6.0",
+        "tsup": "8.3.0",
+        "typescript": "5.6.3"
     },
     "dependencies": {
-        "azure-pipelines-task-lib": "4.10.1",
-        "chromatic": "11.3.0"
+        "azure-pipelines-task-lib": "4.17.3",
+        "chromatic": "11.12.6"
     },
     "engines": {
-        "node": ">=20.0.0"
+        "node": ">=21.1.0"
     },
     "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903"
 }
