@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint max-len: 0 */
+
 /**
  * This script is heavily inspired by the official Chromatic Github Action.
  * @see https://github.com/chromaui/chromatic-cli/blob/main/action-src/main.ts

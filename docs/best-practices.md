@@ -46,6 +46,30 @@ You can identify builds where TurboSnap is disabled by navigating to the build's
 ![](./static/turbosnap_bad.png)
 :::
 
+## Exclude localization files from Chromatic
+
+Changes to `resources.json` files often disable TurboSnap and trigger a _"full build"_ because they modify the `.storybook/preview.tsx` file.
+
+To prevent this, add the [untraced](https://www.chromatic.com/docs/configure/#untraced) setting to your project's `chromatic.config.json` file:
+
+```json chromatic.config.json
+{
+    "$schema": "https://www.chromatic.com/config-file.schema.json",
+    "untraced": ["**/resources.json"]
+}
+```
+
+> If you're using Chromado, you don't need to manually add the `onlyChanged` setting, as it's already included by default.
+
+Additionally, you might want to consider adding the `package.json` file to the `untraced` list as well:
+
+```json chromatic.config.json
+{
+    "$schema": "https://www.chromatic.com/config-file.schema.json",
+    "untraced": ["**/resources.json", "package.json"]
+}
+```
+
 ## Only capture snapshots for Chrome
 
 Chromatic can capture snapshots across [multiple browsers](https://www.chromatic.com/docs/browsers/), which can be useful but also expensive because it multiplies the number of snapshots taken by the number of browsers enabled.
@@ -65,3 +89,5 @@ Please do not use this feature. Only run visual tests from a PR.
 We want to optimize our snapshot budget and avoid using it on PRs from the Renovate bot. Although minor or patch updates to dependencies could introduce regressions, we prefer to invest our snapshot budget in detecting regressions from changes we make directly to our codebases.
 
 Be sure to configure your CLI to ignore PRs from the Renovate bot.
+
+> Chromado disables PRs matching the `renovate/**` pattern by default.
