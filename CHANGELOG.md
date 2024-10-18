@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 1.1.1
+
+### Patch Changes
+
+- [#37](https://github.com/gsoft-inc/wl-chromado/pull/37) [`81afdbf`](https://github.com/gsoft-inc/wl-chromado/commit/81afdbfaafb35fa651c0f99e7589878ab3aa46e3) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Fix a typo in the new snapshot line.
+
 ## 1.1.0
 
 ### Minor Changes
