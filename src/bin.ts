@@ -127,6 +127,12 @@ ${output.changeCount === 0
 }
         </tr>
         <tr>
+        <td>🕵️‍♀️ Snapshots:</td>
+        <td>
+        <span>${output.actualCaptureCount} / ${output.inheritedCaptureCount}</span>
+        </td>
+        </tr>
+        <tr>
         <td>🔍 Build URL:</td>
         <td>
         <a href="${output.buildUrl}" target="_blank" aria-label="${output.buildUrl} (Opens in a new window or tab)">${output.buildUrl}</a>
