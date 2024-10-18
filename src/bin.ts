@@ -85,12 +85,15 @@ async function run() {
             return;
         }
 
+        const changeCount = output.changeCount ?? 0;
+        const errorCount = output.errorCount ?? 0;
+
         // Chromatic will returns changes even if they are automatically accepted.
         // We don't want to go though the whole process in this case as it's happening on the main branch.
         if (isAutoAcceptingChangesOnMainBranch) {
             if (isDebug) {
-                const message = output.changeCount > 0
-                    ? `${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"} has been automatically accepted.`
+                const message = changeCount > 0
+                    ? `${changeCount} visual ${changeCount === 1 ? "change" : "changes"} has been automatically accepted.`
                     : "";
 
                 console.log(`[chromado] ${message}`);
@@ -100,7 +103,7 @@ async function run() {
         }
 
         const comment = `
-### ${output.errorCount > 0 || output.changeCount > 0 ? "❌" : "✅"} Chromatic
+### ${errorCount > 0 || changeCount > 0 ? "❌" : "✅"} Chromatic
 
 <div>
     <table>
@@ -112,24 +115,27 @@ async function run() {
         <tr>
         <td>💥 Component errors:</td>
         <td>
-${output.errorCount === 0
+${errorCount === 0
         ? "✅&nbsp; None"
-        : `❌&nbsp; ${output.errorCount} ${output.errorCount === 1 ? "error" : "errors"}`
+        : `❌&nbsp; ${errorCount} ${errorCount === 1 ? "error" : "errors"}`
 }
         </td>
         </tr>
         <tr>
         <td>✨ Visual changes:</td>
         <td>
-${output.changeCount === 0
+${changeCount === 0
         ? "✅&nbsp; None"
-        : `❌&nbsp; Found ${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"}`
+        : `❌&nbsp; Found ${changeCount} visual ${changeCount === 1 ? "change" : "changes"}`
 }
         </tr>
         <tr>
         <td>🕵️‍♀️ Snapshots:</td>
         <td>
-        <span>${output.actualCaptureCount} / ${output.inheritedCaptureCount}</span>
+${output.inheritedCaptureCount !== 0
+        ? `✅&nbsp; Captured ${output.actualCaptureCount} snapshots and inherited from ${output.inheritedCaptureCount} TurboSnaps`
+        : "❌&nbsp; This build is not using TurboSnaps. Be sure to read Workleap's <a href=\"https://gsoft-inc.github.io/wl-chromado/best-practices/\" target=\"blank\" aria-label=\"https://gsoft-inc.github.io/wl-chromado/best-practices/ (Opens in a new window or tab)\">best practices<a/> for Chromatic."
+}
         </td>
         </tr>
         <tr>
@@ -156,12 +162,12 @@ ${output.changeCount === 0
             accessToken: getVariable("CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN")
         });
 
-        if (output.errorCount > 0) {
-            setResult(TaskResult.Failed, `${output.errorCount} ${output.errorCount === 1 ? "test" : "tests"} failed.`);
+        if (errorCount > 0) {
+            setResult(TaskResult.Failed, `${errorCount} ${errorCount === 1 ? "test" : "tests"} failed.`);
         }
 
-        if (output.changeCount > 0) {
-            const message = `Found ${output.changeCount} visual ${output.changeCount === 1 ? "change" : "changes"}. Review the ${output.changeCount === 1 ? "change" : "changes"} and re-queue the build to proceed.`;
+        if (changeCount > 0) {
+            const message = `Found ${changeCount} visual ${changeCount === 1 ? "change" : "changes"}. Review the ${changeCount === 1 ? "change" : "changes"} and re-queue the build to proceed.`;
 
             setResult(TaskResult.Failed, message);
         }

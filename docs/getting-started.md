@@ -23,7 +23,11 @@ Chromado resolves this by automatically providing build notifications as pull re
 
 ### TurboSnap
 
-Chromado is compatible with [TurboSnap](https://www.chromatic.com/docs/turbosnap/) and will by default trigger Chromatic builds with TurboSnap activated.
+Chromado is compatible with [TurboSnap](https://www.chromatic.com/docs/turbosnap/) and will by default trigger Chromatic builds with TurboSnap activated. 
+
+!!!info
+Using TurboSnap is important because we pay for every snapshot taken by Chromatic. We still pay for TurnoSnaps, but they cost **1/5th** of a regular snapshot.
+!!!
 
 ### Squash merge
 
@@ -182,6 +186,10 @@ Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuratio
 | --- | --- |
 | `CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN` | **Pull Request Threads**: Read & Write |
 
+## Best practices
+
+Be sure to read our [best practices](./best-practices.md) page to help Workleap stay within its monthly Chromatic snapshot budget.
+
 ## Try it :rocket:
 
 To test your new Chromatic pipeline, follow these steps:
@@ -251,7 +259,7 @@ If you encounter any other issues with the Chromatic pipeline, follow these step
 ```
 
 !!!info
-TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap.
+TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap. We pay for every snapshot that Chromatic takes.
 !!!
 
 

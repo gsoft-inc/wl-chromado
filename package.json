@@ -34,22 +34,22 @@
     },
     "devDependencies": {
         "@changesets/changelog-github": "0.5.0",
-        "@changesets/cli": "2.27.1",
-        "@types/node": "20.12.2",
-        "@typescript-eslint/parser": "7.5.0",
-        "@workleap/eslint-plugin": "3.2.1",
+        "@changesets/cli": "2.27.9",
+        "@types/node": "22.7.6",
+        "@typescript-eslint/parser": "8.10.0",
+        "@workleap/eslint-plugin": "3.2.2",
         "@workleap/tsup-configs": "3.0.6",
         "@workleap/typescript-configs": "3.0.2",
-        "eslint": "8.57.0",
+        "eslint": "9.12.0",
         "installed-check": "9.3.0",
-        "knip": "5.7.0",
-        "retypeapp": "3.5.0",
-        "tsup": "8.0.2",
-        "typescript": "5.4.3"
+        "knip": "5.33.3",
+        "retypeapp": "3.6.0",
+        "tsup": "8.3.0",
+        "typescript": "5.6.3"
     },
     "dependencies": {
-        "azure-pipelines-task-lib": "4.10.1",
-        "chromatic": "11.3.0"
+        "azure-pipelines-task-lib": "4.17.3",
+        "chromatic": "11.12.6"
     },
     "engines": {
         "node": ">=20.0.0"
