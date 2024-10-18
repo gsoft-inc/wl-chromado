@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/wl-chromado">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.782588138576">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.782591648813">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -34,12 +34,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../static/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.782588138576" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.782591648813" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.782588138576" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.782591648813" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.782588138576" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.782588138576" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.782591648813" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.782591648813" defer></script>
 
     <link href="https://gsoft-inc.github.io/wl-idp-docs-hub/static/retype-customization.css" rel="stylesheet" />
 
@@ -335,6 +335,13 @@
         </div>
     </div>
 </div>
+<p>If TurboSnap is disabled for your build, the PR message will indicate so. In some cases, such as for a <em>&quot;rebuild&quot;</em>, this is fine. However, in most cases, you should review the details of your Chromatic build to understand why TurboSnap was disabled.</p>
+<div class="align-image-left"><p><figure class="content-center">
+    <img src="../static/pr-turbosnap-disabled.png" alt="TurboSnap disabled warning example">
+    <figcaption class="caption">TurboSnap disabled warning example</figcaption>
+</figure>
+</p>
+</div>
 <doc-anchor-target id="squash-merge">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#squash-merge">#</doc-anchor-trigger>
@@ -404,18 +411,20 @@
 <p>2.1. If your project already includes a <a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops&amp;pivots=templates-includes" class="outbound" target="_blank">template file</a> to set up your pipelines, then paste the following configuration:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">chromatic.yml</div>
-<pre class="language-yaml" data-line="19,22,27,29-30"><code v-pre class="language-yaml"># Run Chromatic on the &quot;main&quot; branch after a pull request has been merged
+<pre class="language-yaml" data-line="14,21,24,29,31-32"><code v-pre class="language-yaml"># Run Chromatic on the &quot;main&quot; branch after a pull request has been merged
 # (currently required to update the baseline when doing &quot;squash&quot; merge for pull requests).
 trigger:
   branches:
     include:
       - main
 
-# Run Chromatic on every pull request targeting the &quot;main&quot; branch as destination.
+# Run Chromatic on every pull request targeting the &quot;main&quot; branch as destination
+# that is ready for review (not a draft).
 pr:
   branches:
     include:
       - main
+  drafts: false
 
 steps:
   # Chromatic needs the full Git history to compare the baselines.
@@ -455,18 +464,20 @@ steps:
 <p>2.2. If your project doesn&#x27;t include a template file to set up your pipelines, paste the following configuration:</p>
 <div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <div class="codeblock-title">chromatic.yml</div>
-<pre class="language-yaml" data-line="19,54,56-57"><code v-pre class="language-yaml"># Run Chromatic on the &quot;main&quot; branch after a pull request has been merged
+<pre class="language-yaml" data-line="14,21,56,58-59"><code v-pre class="language-yaml"># Run Chromatic on the &quot;main&quot; branch after a pull request has been merged
 # (currently required to update the baseline when doing &quot;squash&quot; merge for pull requests).
 trigger:
   branches:
     include:
       - main
 
-# Run Chromatic on every pull request targeting the &quot;main&quot; branch as destination.
+# Run Chromatic on every pull request targeting the &quot;main&quot; branch as destination
+# that is ready for review (not a draft).
 pr:
   branches:
     include:
       - main
+  drafts: false
 
 steps:
   # Chromatic needs the full Git history to compare the baselines.
