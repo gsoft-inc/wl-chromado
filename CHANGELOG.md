@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 1.0.2
+
+### Patch Changes
+
+- [#29](https://github.com/gsoft-inc/wl-chromado/pull/29) [`9964503`](https://github.com/gsoft-inc/wl-chromado/commit/9964503c1d7bcf72de5f2fd1e3a53862e8e436b4) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Added snapshots count to the PR message.
+
 ## 1.0.1
 
 ### Patch Changes
