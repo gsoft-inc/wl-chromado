@@ -7,7 +7,7 @@ To help Workleap stay within its monthly Chromatic snapshot budget, we ask teams
 
 ## Use TurboSnap
 
-Make sure [TurboSnap](https://www.chromatic.com/docs/turbosnap/) is enabled, and periodically check how many snapshots were taken for your builds with and without TurboSnap.
+Make sure [TurboSnap](https://www.chromatic.com/docs/turbosnap/) is enabled, and periodically check how many snapshots were caputred for your builds with and without TurboSnap.
 
 You can log into [Chromatic](https://www.chromatic.com/) and navigate to a build's details to confirm if TurboSnap is enabled for a specific build. If you don't see the _"TurboSnap"_ ribbon on the right side of the screen, it most likely means TurboSnap is not enabled for that project.
 
@@ -25,13 +25,13 @@ You can log into [Chromatic](https://www.chromatic.com/) and navigate to a build
 
 ## Merge PRs quickly
 
-We often see PRs that stay open for multiple days or weeks with daily commits. Avoid this, as new snapshots (or TurboSnaps, which still cost 1/5th of a regular snapshot) are taken **every time a commit is pushed**.
+We often see PRs that stay open for multiple days or weeks with daily commits. Avoid this, as new snapshots (or TurboSnaps, which still cost 1/5th of a regular snapshot) are captured **every time a commit is pushed**.
 
 As a general rule, once a PR is open and ready for review, there should be **no more than 5-10 additional commits**.
 
-To help with this, if you need to share a PR that isn’t ready for review, you can open it as a [draft](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser#create-draft-prs). The Chromatic CLI "step" will not run for PRs marked as "draft".
+To help with this, if you need to share a PR that isn't ready for review, you can open it as a [draft](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser#create-draft-prs). The Chromatic CLI "step" will not run for PRs marked as "draft".
 
-> If you expect to use "draft" PR, make sure to either add `drafts: false` to your pipeline configuration or that your build policies do not run for "draft" PRs.
+> Be sure to either add `drafts: false` to your pipeline configuration or that your build policies do not run for "draft" PRs.
 
 ## Create small, fast-merging PRs for changes that disable TurboSnap
 
@@ -74,9 +74,9 @@ Additionally, you might want to consider adding the `package.json` file to the `
 
 ## Only capture snapshots for Chrome
 
-Chromatic can capture snapshots across [multiple browsers](https://www.chromatic.com/docs/browsers/), which can be useful but also expensive because it multiplies the number of snapshots taken by the number of browsers enabled.
+Chromatic can capture snapshots across [multiple browsers](https://www.chromatic.com/docs/browsers/), which can be useful but also expensive because it multiplies the number of snapshots caputred by the number of browsers enabled.
 
-For example, if both Chrome and Safari are enabled, **2 snapshots** (or TurboSnaps) will be taken for every story.
+For example, if both Chrome and Safari are enabled, **2 snapshots** (or TurboSnaps) will be captured for every story.
 
 **We ask that each team enable Chrome only.**
 
