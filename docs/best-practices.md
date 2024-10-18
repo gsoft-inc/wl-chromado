@@ -14,13 +14,13 @@ You can log into [Chromatic](https://www.chromatic.com/) and navigate to a build
 :white_check_mark: Good
 
 :::align-image-left
-![](./static/turbosnap_good.png)
+![](./static/turbosnap-good.png)
 :::
 
 :no_entry_sign: Bad
 
 :::align-image-left
-![](./static/turbosnap_bad.png)
+![](./static/turbosnap-bad.png)
 :::
 
 ## Merge PRs quickly
@@ -30,6 +30,8 @@ We often see PRs that stay open for multiple days or weeks with daily commits. A
 As a general rule, once a PR is open and ready for review, there should be **no more than 5-10 additional commits**.
 
 To help with this, if you need to share a PR that isn’t ready for review, you can open it as a [draft](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-requests?view=azure-devops&tabs=browser#create-draft-prs). The Chromatic CLI "step" will not run for PRs marked as "draft".
+
+> If you expect to use "draft" PR, make sure to either add the `drafts: false` to your pipeline configuration or that your build policies do not run for "draft" PRs.
 
 ## Create small, fast-merging PRs for changes that disable TurboSnap
 

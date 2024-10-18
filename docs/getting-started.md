@@ -29,6 +29,12 @@ Chromado is compatible with [TurboSnap](https://www.chromatic.com/docs/turbosnap
 Using TurboSnap is important because we pay for every snapshot taken by Chromatic. We still pay for TurnoSnaps, but they cost **1/5th** of a regular snapshot.
 !!!
 
+If TurboSnap is disabled for your build, the PR message will indicate so. In some cases, such as for a _"rebuild"_, this is fine. However, in most cases, you should review the details of your Chromatic build to understand why TurboSnap was disabled.
+
+:::align-image-left
+![TurboSnap disabled warning example](./static/pr-turbosnap-disabled.png)
+:::
+
 ### Squash merge
 
 Chromatic doesn't offer any mechanism to support [squash merge](https://learn.microsoft.com/en-us/azure/devops/repos/git/merging-with-squash?view=azure-devops) on Azure DevOps. This means that when using Azure DevOps as a Git provider, if you wish to keep your Chromatic [baselines](https://www.chromatic.com/docs/branching-and-baselines/) up-to-date, you would be constrained to merging your pull requests with regular merge commits. Fortunately, Chromado implements a workflow based on Chromatic's [auto-accept-changes](https://www.chromatic.com/docs/azure-pipelines/#azure-squashrebase-merge-and-the-main-branch) feature, allowing pull requests to be completed with squash merges.
@@ -73,7 +79,7 @@ First, let's create a new [Chromatic project](#create-a-new-chromatic-project), 
 
 2.1. If your project already includes a [template file](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops&pivots=templates-includes) to set up your pipelines, then paste the following configuration:
 
-```yaml !#19,22,27,29-30 chromatic.yml
+```yaml !#14,21,24,29,31-32 chromatic.yml
 # Run Chromatic on the "main" branch after a pull request has been merged
 # (currently required to update the baseline when doing "squash" merge for pull requests).
 trigger:
@@ -81,11 +87,13 @@ trigger:
     include:
       - main
 
-# Run Chromatic on every pull request targeting the "main" branch as destination.
+# Run Chromatic on every pull request targeting the "main" branch as destination
+# that is ready for review (not a draft).
 pr:
   branches:
     include:
       - main
+  drafts: false
 
 steps:
   # Chromatic needs the full Git history to compare the baselines.
@@ -112,7 +120,7 @@ Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuratio
 
 2.2. If your project doesn't include a template file to set up your pipelines, paste the following configuration:
 
-```yaml #19,54,56-57 chromatic.yml
+```yaml #14,21,56,58-59 chromatic.yml
 # Run Chromatic on the "main" branch after a pull request has been merged
 # (currently required to update the baseline when doing "squash" merge for pull requests).
 trigger:
@@ -120,11 +128,13 @@ trigger:
     include:
       - main
 
-# Run Chromatic on every pull request targeting the "main" branch as destination.
+# Run Chromatic on every pull request targeting the "main" branch as destination
+# that is ready for review (not a draft).
 pr:
   branches:
     include:
       - main
+  drafts: false
 
 steps:
   # Chromatic needs the full Git history to compare the baselines.
