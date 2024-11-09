@@ -14,13 +14,13 @@ You can log into [Chromatic](https://www.chromatic.com/) and navigate to a build
 :white_check_mark: Good
 
 :::align-image-left
-![](./static/turbosnap-good.png)
+![](./static/turbosnap-good.png){width=298 height=185}
 :::
 
 :no_entry_sign: Bad
 
 :::align-image-left
-![](./static/turbosnap-bad.png)
+![](./static/turbosnap-bad.png){width=302 height=273}
 :::
 
 ## Merge PRs quickly
@@ -35,24 +35,55 @@ To help with this, if you need to share a PR that isn't ready for review, you ca
 
 ## Create small, fast-merging PRs for changes that disable TurboSnap
 
-Some changes can disable TurboSnap for a build. These changes include:
+Some changes can disable TurboSnap for a build. It's often the case when a module referenced by `./storybook/preview.ts[x]` file is updated or when package dependencies are added/updated/removed.
 
-- Updating React providers in the application (usually in `Provider.tsx`)
-- Modifying the `package.json` file
+These changes include:
+
+- Updating React providers in the application (`Provider.tsx`)
+- Updating localization files (`**/resources.json`)
+- Updating environment variables
+- Updating constants files (including feature flags and routes)
+- Updating package dependencies (`**/package.json`)
 
 We recommend making these changes in small, focused PRs and **merging** them **as quickly as possible**.
 
-You can identify builds where TurboSnap is disabled by navigating to the build's details and looking for the _"TurboSnap"_ ribbon on the right. For instance, Chromatic may indicate that a _"full build"_ was triggered due to a change in the `.storybook/preview.tsx` file, possibly because React providers were updated, localized resources were modified, etc.
+You can **identify** builds where **TurboSnap** is **disabled** by navigating to the build's details and looking for the _"TurboSnap"_ **ribbon** on the **right**. For instance, Chromatic may indicate that a _"full build"_ was triggered due to a change in the `.storybook/preview.ts[x]` file, possibly because React providers were updated, localized resources were modified, etc.
 
 :::align-image-left
-![](./static/turbosnap_bad.png)
+![](./static/turbosnap-bad.png){width=302 height=273}
 :::
 
-## Exclude localization files from Chromatic
+You can play with the [untraced](https://www.chromatic.com/docs/configure/#untraced) setting of your project's `chromatic.config.json` file to tell chromatic to ignore some of these files:
 
-Changes to `resources.json` files often disable TurboSnap and trigger a _"full build"_ because they modify the `.storybook/preview.tsx` file.
+```json chromatic.config.json
+{
+    "$schema": "https://www.chromatic.com/config-file.schema.json",
+    "untraced": ["**/package.json"]
+}
+```
 
-To prevent this, add the [untraced](https://www.chromatic.com/docs/configure/#untraced) setting to your project's `chromatic.config.json` file:
+## Avoid importing modules from barrel files
+
+Barrel files (`**/index.ts[x]`) are often problematic and should generally be avoided. This is particularly important when working with chromatic. If a barrel file is referenced in the `.storybook/preview.ts[x]` file and any module exported by that barrel file is updated, **TurboSnap** will be **disabled**, and a _"full build"_ will be triggered.
+
+## Ignore package.json files
+
+Changes to `package.json` files will **disable TurboSnap** and trigger a _"full build"_. While this can be useful if the updated package impacts the UI (e.g., Orbiter or Hopper), it is often unnecessary.
+
+To avoid this, add the [untraced](https://www.chromatic.com/docs/configure/#untraced) setting to your project's `chromatic.config.json` file and instruct chromatic to ignore `package.json` files:
+
+```json chromatic.config.json
+{
+    "$schema": "https://www.chromatic.com/config-file.schema.json",
+    "untraced": ["**/package.json"]
+}
+```
+
+## Ignore localization files
+
+Changes to `resources.json` files often **disable TurboSnap** and trigger a _"full build"_ because they modify the `.storybook/preview.ts[x]` file.
+
+To prevent this, add the [untraced](https://www.chromatic.com/docs/configure/#untraced) setting to your project's `chromatic.config.json` file and tell chromatic to ignore resource files:
 
 ```json chromatic.config.json
 {
@@ -61,16 +92,22 @@ To prevent this, add the [untraced](https://www.chromatic.com/docs/configure/#un
 }
 ```
 
-> If you're using Chromado, you don't need to manually add the `onlyChanged` setting, as it's already included by default.
+## Avoid large constants or utils files
 
-Additionally, you might want to consider adding the `package.json` file to the `untraced` list as well:
+Changes to constants or utils files that are referenced by the `.storybook/preview.ts[x]` file will **disable TurboSnap** and trigger a _"full build"_.
 
-```json chromatic.config.json
-{
-    "$schema": "https://www.chromatic.com/config-file.schema.json",
-    "untraced": ["**/resources.json", "package.json"]
-}
-```
+Examples of such files:
+
+- Feature flags
+- Environment variables
+- Routes
+- Backend constants
+- Dates utils
+- Formatting utils
+
+As a general rule, avoid referencing large files with multiple unrelated exports. Instead, aim for smaller and more focused files.
+
+If you believe that updates to certain constants or utils files should not refresh the snapshot baseline, add them to the [untraced](https://www.chromatic.com/docs/configure/#untraced) setting of your project's `chromatic.config.json` file.
 
 ## Only capture snapshots for Chrome
 
