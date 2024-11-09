@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/wl-chromado">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.783461401947">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.784433056123">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -34,12 +34,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../static/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.783461401947" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.784433056123" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.783461401947" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.784433056123" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.783461401947" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.783461401947" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.784433056123" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.784433056123" defer></script>
 
     <link href="https://gsoft-inc.github.io/wl-idp-docs-hub/static/retype-customization.css" rel="stylesheet" />
 
@@ -300,14 +300,14 @@
 <p>You can log into <a href="https://www.chromatic.com/" class="outbound" target="_blank">Chromatic</a> and navigate to a build&#x27;s details to confirm if TurboSnap is enabled for a specific build. If you don&#x27;t see the <em>&quot;TurboSnap&quot;</em> ribbon on the right side of the screen, it most likely means TurboSnap is not enabled for that project.</p>
 <p><span class="docs-emoji">&#x2705;</span> Good</p>
 <div class="align-image-left"><p><figure class="content-center">
-    <img src="../static/turbosnap-good.png" alt="">
+    <img src="../static/turbosnap-good.png" alt="" width="298" height="185">
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
 </div>
 <p><span class="docs-emoji">&#x1F6AB;</span> Bad</p>
 <div class="align-image-left"><p><figure class="content-center">
-    <img src="../static/turbosnap-bad.png" alt="">
+    <img src="../static/turbosnap-bad.png" alt="" width="302" height="273">
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
@@ -330,27 +330,61 @@
         <span>Create small, fast-merging PRs for changes that disable TurboSnap</span>
     </h2>
 </doc-anchor-target>
-<p>Some changes can disable TurboSnap for a build. These changes include:</p>
+<p>Some changes can disable TurboSnap for a build. It&#x27;s often the case when a module referenced by <code v-pre>./storybook/preview.ts[x]</code> file is updated or when package dependencies are added/updated/removed.</p>
+<p>These changes include:</p>
 <ul>
-<li>Updating React providers in the application (usually in <code v-pre>Provider.tsx</code>)</li>
-<li>Modifying the <code v-pre>package.json</code> file</li>
+<li>Updating React providers in the application (<code v-pre>Provider.tsx</code>)</li>
+<li>Updating localization files (<code v-pre>**/resources.json</code>)</li>
+<li>Updating environment variables</li>
+<li>Updating constants files (including feature flags and routes)</li>
+<li>Updating package dependencies (<code v-pre>**/package.json</code>)</li>
 </ul>
 <p>We recommend making these changes in small, focused PRs and <strong>merging</strong> them <strong>as quickly as possible</strong>.</p>
-<p>You can identify builds where TurboSnap is disabled by navigating to the build&#x27;s details and looking for the <em>&quot;TurboSnap&quot;</em> ribbon on the right. For instance, Chromatic may indicate that a <em>&quot;full build&quot;</em> was triggered due to a change in the <code v-pre>.storybook/preview.tsx</code> file, possibly because React providers were updated, localized resources were modified, etc.</p>
+<p>You can <strong>identify</strong> builds where <strong>TurboSnap</strong> is <strong>disabled</strong> by navigating to the build&#x27;s details and looking for the <em>&quot;TurboSnap&quot;</em> <strong>ribbon</strong> on the <strong>right</strong>. For instance, Chromatic may indicate that a <em>&quot;full build&quot;</em> was triggered due to a change in the <code v-pre>.storybook/preview.ts[x]</code> file, possibly because React providers were updated, localized resources were modified, etc.</p>
 <div class="align-image-left"><p><figure class="content-center">
-    <img src="./static/turbosnap_bad.png" alt="">
+    <img src="../static/turbosnap-bad.png" alt="" width="302" height="273">
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
 </div>
-<doc-anchor-target id="exclude-localization-files-from-chromatic">
+<p>You can play with the <a href="https://www.chromatic.com/docs/configure/#untraced" class="outbound" target="_blank">untraced</a> setting of your project&#x27;s <code v-pre>chromatic.config.json</code> file to tell chromatic to ignore some of these files:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">chromatic.config.json</div>
+<pre class="language-json"><code v-pre class="language-json">{
+    &quot;$schema&quot;: &quot;https://www.chromatic.com/config-file.schema.json&quot;,
+    &quot;untraced&quot;: [&quot;**/package.json&quot;]
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="avoid-importing-modules-from-barrel-files">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#exclude-localization-files-from-chromatic">#</doc-anchor-trigger>
-        <span>Exclude localization files from Chromatic</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#avoid-importing-modules-from-barrel-files">#</doc-anchor-trigger>
+        <span>Avoid importing modules from barrel files</span>
     </h2>
 </doc-anchor-target>
-<p>Changes to <code v-pre>resources.json</code> files often disable TurboSnap and trigger a <em>&quot;full build&quot;</em> because they modify the <code v-pre>.storybook/preview.tsx</code> file.</p>
-<p>To prevent this, add the <a href="https://www.chromatic.com/docs/configure/#untraced" class="outbound" target="_blank">untraced</a> setting to your project&#x27;s <code v-pre>chromatic.config.json</code> file:</p>
+<p>Barrel files (<code v-pre>**/index.ts[x]</code>) are often problematic and should generally be avoided. This is particularly important when working with chromatic. If a barrel file is referenced in the <code v-pre>.storybook/preview.ts[x]</code> file and any module exported by that barrel file is updated, <strong>TurboSnap</strong> will be <strong>disabled</strong>, and a <em>&quot;full build&quot;</em> will be triggered.</p>
+<doc-anchor-target id="ignore-packagejson-files">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ignore-packagejson-files">#</doc-anchor-trigger>
+        <span>Ignore package.json files</span>
+    </h2>
+</doc-anchor-target>
+<p>Changes to <code v-pre>package.json</code> files will <strong>disable TurboSnap</strong> and trigger a <em>&quot;full build&quot;</em>. While this can be useful if the updated package impacts the UI (e.g., Orbiter or Hopper), it is often unnecessary.</p>
+<p>To avoid this, add the <a href="https://www.chromatic.com/docs/configure/#untraced" class="outbound" target="_blank">untraced</a> setting to your project&#x27;s <code v-pre>chromatic.config.json</code> file and instruct chromatic to ignore <code v-pre>package.json</code> files:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">chromatic.config.json</div>
+<pre class="language-json"><code v-pre class="language-json">{
+    &quot;$schema&quot;: &quot;https://www.chromatic.com/config-file.schema.json&quot;,
+    &quot;untraced&quot;: [&quot;**/package.json&quot;]
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="ignore-localization-files">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#ignore-localization-files">#</doc-anchor-trigger>
+        <span>Ignore localization files</span>
+    </h2>
+</doc-anchor-target>
+<p>Changes to <code v-pre>resources.json</code> files often <strong>disable TurboSnap</strong> and trigger a <em>&quot;full build&quot;</em> because they modify the <code v-pre>.storybook/preview.ts[x]</code> file.</p>
+<p>To prevent this, add the <a href="https://www.chromatic.com/docs/configure/#untraced" class="outbound" target="_blank">untraced</a> setting to your project&#x27;s <code v-pre>chromatic.config.json</code> file and tell chromatic to ignore resource files:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">chromatic.config.json</div>
 <pre class="language-json"><code v-pre class="language-json">{
@@ -358,17 +392,24 @@
     &quot;untraced&quot;: [&quot;**/resources.json&quot;]
 }</code></pre>
 </doc-codeblock></div>
-<blockquote>
-<p>If you&#x27;re using Chromado, you don&#x27;t need to manually add the <code v-pre>onlyChanged</code> setting, as it&#x27;s already included by default.</p>
-</blockquote>
-<p>Additionally, you might want to consider adding the <code v-pre>package.json</code> file to the <code v-pre>untraced</code> list as well:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<div class="codeblock-title">chromatic.config.json</div>
-<pre class="language-json"><code v-pre class="language-json">{
-    &quot;$schema&quot;: &quot;https://www.chromatic.com/config-file.schema.json&quot;,
-    &quot;untraced&quot;: [&quot;**/resources.json&quot;, &quot;package.json&quot;]
-}</code></pre>
-</doc-codeblock></div>
+<doc-anchor-target id="avoid-large-constants-or-utils-files">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#avoid-large-constants-or-utils-files">#</doc-anchor-trigger>
+        <span>Avoid large constants or utils files</span>
+    </h2>
+</doc-anchor-target>
+<p>Changes to constants or utils files that are referenced by the <code v-pre>.storybook/preview.ts[x]</code> file will <strong>disable TurboSnap</strong> and trigger a <em>&quot;full build&quot;</em>.</p>
+<p>Examples of such files:</p>
+<ul>
+<li>Feature flags</li>
+<li>Environment variables</li>
+<li>Routes</li>
+<li>Backend constants</li>
+<li>Dates utils</li>
+<li>Formatting utils</li>
+</ul>
+<p>As a general rule, avoid referencing large files with multiple unrelated exports. Instead, aim for smaller and more focused files.</p>
+<p>If you believe that updates to certain constants or utils files should not refresh the snapshot baseline, add them to the <a href="https://www.chromatic.com/docs/configure/#untraced" class="outbound" target="_blank">untraced</a> setting of your project&#x27;s <code v-pre>chromatic.config.json</code> file.</p>
 <doc-anchor-target id="only-capture-snapshots-for-chrome">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#only-capture-snapshots-for-chrome">#</doc-anchor-trigger>
