@@ -18,12 +18,22 @@ The Chromatic Azure Pipelines [documentation](https://www.chromatic.com/docs/azu
 Chromado resolves this by automatically providing build notifications as pull request comments whenever a Chromatic build is completed:
 
 :::align-image-left
-![Pull request notification example](./static/chromatic-pr-notification.png)
+![Pull request notification example](./static/chromatic-pr-notification-red.png)
 :::
 
 ### TurboSnap
 
-Chromado is compatible with [TurboSnap](https://www.chromatic.com/docs/turbosnap/) and will by default trigger Chromatic builds with TurboSnap activated.
+Chromado is compatible with [TurboSnap](https://www.chromatic.com/docs/turbosnap/) and will by default trigger Chromatic builds with TurboSnap activated. 
+
+If TurboSnap is disabled for your build, the PR message will indicate so. In some cases, such as for a _"rebuild"_, this is fine. However, in most cases, you should review the details of your Chromatic build to understand why TurboSnap was disabled:
+
+:::align-image-left
+![TurboSnap disabled warning example](./static/pr-turbosnap-disabled-2.png)
+:::
+
+!!!warning
+Using TurboSnap is important because we pay for every snapshot captured by Chromatic. We still pay for TurnoSnaps, but they cost **1/5th** of a regular snapshot.
+!!!
 
 ### Squash merge
 
@@ -69,7 +79,7 @@ First, let's create a new [Chromatic project](#create-a-new-chromatic-project), 
 
 2.1. If your project already includes a [template file](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops&pivots=templates-includes) to set up your pipelines, then paste the following configuration:
 
-```yaml !#19,22,27,29-30 chromatic.yml
+```yaml !#14,21,24,29,31-32 chromatic.yml
 # Run Chromatic on the "main" branch after a pull request has been merged
 # (currently required to update the baseline when doing "squash" merge for pull requests).
 trigger:
@@ -77,11 +87,13 @@ trigger:
     include:
       - main
 
-# Run Chromatic on every pull request targeting the "main" branch as destination.
+# Run Chromatic on every pull request targeting the "main" branch as destination
+# that is ready for review (not a draft).
 pr:
   branches:
     include:
       - main
+  drafts: false
 
 steps:
   # Chromatic needs the full Git history to compare the baselines.
@@ -108,7 +120,7 @@ Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuratio
 
 2.2. If your project doesn't include a template file to set up your pipelines, paste the following configuration:
 
-```yaml #19,54,56-57 chromatic.yml
+```yaml #14,21,56,58-59 chromatic.yml
 # Run Chromatic on the "main" branch after a pull request has been merged
 # (currently required to update the baseline when doing "squash" merge for pull requests).
 trigger:
@@ -116,11 +128,13 @@ trigger:
     include:
       - main
 
-# Run Chromatic on every pull request targeting the "main" branch as destination.
+# Run Chromatic on every pull request targeting the "main" branch as destination
+# that is ready for review (not a draft).
 pr:
   branches:
     include:
       - main
+  drafts: false
 
 steps:
   # Chromatic needs the full Git history to compare the baselines.
@@ -182,6 +196,10 @@ Most of Chromatic [CLI options](https://www.chromatic.com/docs/cli/#configuratio
 | --- | --- |
 | `CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN` | **Pull Request Threads**: Read & Write |
 
+## Best practices
+
+Be sure to read our [best practices](./best-practices.md) page to help Workleap stay within its monthly Chromatic snapshot budget.
+
 ## Try it :rocket:
 
 To test your new Chromatic pipeline, follow these steps:
@@ -197,7 +215,7 @@ To test your new Chromatic pipeline, follow these steps:
 5. A Chromatic build should automatically trigger for the pull request, and a comment with the visual change should be added to it. The comment should indicate that Chromatic detected at least one visual change.
 
 :::align-image-left
-![](./static/chromatic-pr-notification.png)
+![](./static/chromatic-pr-notification-red.png)
 :::
 
 6. In the pull request comment, click on the "Build URL" link. Accept the changes in the [Chromatic](https://www.chromatic.com/start) application.
@@ -209,6 +227,10 @@ To test your new Chromatic pipeline, follow these steps:
 :::
 
 8. Once the Chromatic pipeline completes successfully, merge the pull request.
+
+:::align-image-left
+![](./static/chromatic-pr-notification-green.png)
+:::
 
 9. A new Chromatic build should automatically trigger for the `main` branch. The changes from this new build should be automatically accepted by Chromatic, and the pipeline should complete successfully.
 
@@ -251,7 +273,7 @@ If you encounter any other issues with the Chromatic pipeline, follow these step
 ```
 
 !!!info
-TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap.
+TurboSnap should be re-enabled promptly as Chromatic snapshots are not cheap. We pay for every snapshot that Chromatic takes.
 !!!
 
 

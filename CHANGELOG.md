@@ -1,5 +1,23 @@
 # @workleap/chromatic-ado
 
+## 1.1.1
+
+### Patch Changes
+
+- [#37](https://github.com/gsoft-inc/wl-chromado/pull/37) [`81afdbf`](https://github.com/gsoft-inc/wl-chromado/commit/81afdbfaafb35fa651c0f99e7589878ab3aa46e3) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Fix a typo in the new snapshot line.
+
+## 1.1.0
+
+### Minor Changes
+
+- [#34](https://github.com/gsoft-inc/wl-chromado/pull/34) [`3c6840a`](https://github.com/gsoft-inc/wl-chromado/commit/3c6840a5f8ed3b9337693cff4f9bfaac550d547e) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Added a new row to the PR message identifying the number of snapshots taken for the build.
+
+## 1.0.2
+
+### Patch Changes
+
+- [#29](https://github.com/gsoft-inc/wl-chromado/pull/29) [`9964503`](https://github.com/gsoft-inc/wl-chromado/commit/9964503c1d7bcf72de5f2fd1e3a53862e8e436b4) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Added snapshots count to the PR message.
+
 ## 1.0.1
 
 ### Patch Changes
