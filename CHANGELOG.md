@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 1.2.0
+
+### Minor Changes
+
+- [#42](https://github.com/gsoft-inc/wl-chromado/pull/42) [`d2b21a2`](https://github.com/gsoft-inc/wl-chromado/commit/d2b21a217f722591271dfca78ca3aa124ab5f427) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Added a new CHROMATIC_DEFAULT_BRANCH option to configure the name of the repository default branch.
+
 ## 1.1.1
 
 ### Patch Changes
