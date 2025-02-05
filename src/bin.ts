@@ -41,14 +41,17 @@ async function run() {
             argv.push("--only-changed");
         }
 
-        // Accepting the baseline automatically when Chromatic is executed on the "main" branch.
-        // Running Chromatic on the "main" branch allow us to use "squash" merge for PRs, see: https://www.chromatic.com/docs/custom-ci-provider/#squashrebase-merge-and-the-main-branch.
+        // Accepting the baseline automatically when Chromatic is executed on the default branch.
+        // Running Chromatic on the default branch allow us to use "squash" merge for PRs, see: https://www.chromatic.com/docs/custom-ci-provider/#squashrebase-merge-and-the-main-branch.
         // Furthermore, changes from PR doesn't seem to be updating the baseline at all but I don't know why, it seems like a bug with ADO (but according to Chromatic customers support it's normal).
         const isAutoAcceptingChangesOnMainBranch = getVariable("Build.Reason") !== "PullRequest" && getVariable("Build.SourceBranch") === "refs/heads/main";
 
         if (isAutoAcceptingChangesOnMainBranch) {
-            // The second arg restrict the changes to be auto accepted only for the "main" branch.
-            argv.push("--auto-accept-changes", "main");
+            // Defaults to "main" but is configurable becase we have a few repos still using "master" as de the default branch.
+            const defaultBranch = getVariable("CHROMATIC_DEFAULT_BRANCH") ?? "main";
+
+            // The second arg restrict the changes to be auto accepted only for the default branch.
+            argv.push("--auto-accept-changes", defaultBranch);
         }
 
         // Add default branch paths to ignore.
