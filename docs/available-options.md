@@ -53,3 +53,18 @@ Add the `CHROMATIC_DISABLE_TURBOSNAP` environment variable to your `chromatic.ym
 !!!info
 We strongly encourage using TurboSnap as Chromatic snapshots are not cheap.
 !!!
+
+## CHROMATIC_DEFAULT_BRANCH
+
+If your repository default branch is not `main`, using this option to provide the name of your repository default branch:
+
+```yaml !#8 chromatic.yml
+- task: CmdLine@2
+  displayName: Chromatic
+  inputs:
+    script: pnpm dlx @workleap/chromado
+  env:
+    CHROMATIC_PROJECT_TOKEN: $(CHROMATIC_PROJECT_TOKEN)
+    CHROMATIC_PULL_REQUEST_COMMENT_ACCESS_TOKEN: $(PULL_REQUEST_COMMENT_ACCESS_TOKEN)
+    CHROMATIC_DEFAULT_BRANCH: master
+```
