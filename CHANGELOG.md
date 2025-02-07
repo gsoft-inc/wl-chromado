@@ -1,5 +1,11 @@
 # @workleap/chromatic-ado
 
+## 1.2.1
+
+### Patch Changes
+
+- [#44](https://github.com/gsoft-inc/wl-chromado/pull/44) [`a142283`](https://github.com/gsoft-inc/wl-chromado/commit/a1422835e54732c79d4b7e1859a9fb7d1689027b) Thanks [@patricklafrance](https://github.com/patricklafrance)! - Default branch baseline was not updated properly when a custom default branch was provided.
+
 ## 1.2.0
 
 ### Minor Changes
