@@ -139,7 +139,7 @@ ${changeCount === 0
         <td>
 ${output.inheritedCaptureCount !== 0
         ? `✅&nbsp; Captured ${output.actualCaptureCount} snapshots and inherited from ${output.inheritedCaptureCount} TurboSnaps`
-        : "❌&nbsp; This build is not using <a href=\"https://www.chromatic.com/docs/turbosnap\" target=\"blank\" aria-label=\"https://www.chromatic.com/docs/turbosnap (Opens in a new window or tab)\">TurboSnap</a>. Be sure to read Workleap's <a href=\"https://gsoft-inc.github.io/wl-chromado/best-practices\" target=\"blank\" aria-label=\"https://gsoft-inc.github.io/wl-chromado/best-practices (Opens in a new window or tab)\">best practices<a/> for Chromatic."
+        : "❌&nbsp; This build is not using <a href=\"https://www.chromatic.com/docs/turbosnap\" target=\"blank\" aria-label=\"https://www.chromatic.com/docs/turbosnap (Opens in a new window or tab)\">TurboSnap</a>. Be sure to read Workleap's <a href=\"https://workleap.github.io/wl-chromado/best-practices\" target=\"blank\" aria-label=\"https://workleap.github.io/wl-chromado/best-practices (Opens in a new window or tab)\">best practices<a/> for Chromatic."
 }
         </td>
         </tr>
