@@ -49,7 +49,7 @@
     },
     "dependencies": {
         "azure-pipelines-task-lib": "4.17.3",
-        "chromatic": "11.12.6"
+        "chromatic": "^11.25.2"
     },
     "engines": {
         "node": ">=21.1.0"
